@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="allocation" type="allocationType"/>
+  <xs:complexType name="groupType">
+    <xs:sequence>
+      <xs:element type="sessionType" name="session" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="number_of_students" use="optional"/>
+    <xs:attribute type="xs:string" name="teacher" use="optional"/>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="courseType" mixed="true">
+    <xs:sequence>
+      <xs:element type="groupType" name="group" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="name" use="optional"/>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="featureType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="name" use="optional"/>
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+        <xs:attribute type="xs:string" name="hidden" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="sessionType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="room_id" use="optional"/>
+        <xs:attribute type="xs:string" name="duration" use="optional"/>
+        <xs:attribute type="xs:string" name="building_id" use="optional"/>
+        <xs:attribute type="xs:string" name="weekday" use="optional"/>
+        <xs:attribute type="xs:string" name="start_time" use="optional"/>
+        <xs:attribute type="xs:string" name="requires_building_id" use="optional"/>
+        <xs:attribute type="xs:string" name="requires_room_id" use="optional"/>
+        <xs:attribute type="xs:string" name="feature_ids" use="optional"/>
+        <xs:attribute type="xs:string" name="features_ids" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="featuresType">
+    <xs:sequence>
+      <xs:element type="featureType" name="feature" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="coursesType" mixed="true">
+    <xs:sequence>
+      <xs:element type="courseType" name="course" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="allocationType">
+    <xs:sequence>
+      <xs:element type="coursesType" name="courses"/>
+      <xs:element type="featuresType" name="features"/>
+      <xs:element type="buildingsType" name="buildings"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="roomType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="optional"/>
+        <xs:attribute type="xs:string" name="feature_ids" use="optional"/>
+        <xs:attribute type="xs:string" name="number_of_places" use="optional"/>
+        <xs:attribute type="xs:string" name="available_for_allocation" use="optional"/>
+        <xs:attribute type="xs:string" name="note" use="optional"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="buildingType">
+    <xs:sequence>
+      <xs:element type="roomType" name="room" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+    <xs:attribute type="xs:string" name="id" use="optional"/>
+  </xs:complexType>
+  <xs:complexType name="buildingsType">
+    <xs:sequence>
+      <xs:element type="buildingType" name="building" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
