@@ -1,4 +1,4 @@
-import estrutura.AllocationType;
+import room_allocations.xml.AllocationType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

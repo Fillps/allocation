@@ -1,4 +1,6 @@
-package allocator;
+package room_allocations;
+
+import allocator.Requirement;
 
 /**
  * Created by filip on 24/05/2017.

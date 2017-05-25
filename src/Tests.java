@@ -1,5 +1,6 @@
-import allocator.Allocator;
-import estrutura.AllocationType;
+import allocator.Requirement;
+import room_allocations.StartDate;
+import room_allocations.xml.AllocationType;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
@@ -26,17 +27,11 @@ public class Tests {
     }
 
     public static void allocatorTest1_0(){
-        Allocator.ToAllocate class1 = new Allocator.ToAllocate();
-        class1.addRequirement("alunos", "30");
-        class1.addRequirement("horario", "13:30");
-        class1.addRequirement("dia", "5");
-        class1.addRequirement("duration", "120");
+        Requirement startDate1 = new StartDate("4", "13:30");
+        Requirement startDate2 = new StartDate("4", "13:30");
+        Requirement startDate3 = new StartDate("5", "13:30");
+        Requirement startDate4 = new StartDate("4", "15:30");
 
-        Allocator.Available room1 = new Allocator.Available();
-        room1.setId("43425-108");
-        room1.addRequirement("alunos", "60");
-        room1.addRequirement("feature", "5");
-        room1.addRequirement("feature", "8");
-
+        System.out.print(startDate1.compare(startDate2) + " | " + startDate1.compare(startDate3) + " | " + startDate1.compare(startDate4) );
     }
 }

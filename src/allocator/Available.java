@@ -6,5 +6,4 @@ import java.util.Map;
 public class Available extends ToAllocate{
 
 
-
 }
