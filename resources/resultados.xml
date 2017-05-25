@@ -3,7 +3,7 @@
     <courses>
         <course name="AGENTES AUTÔNOMOS E SISTEMAS MULTIAGENTES" id="INF05019">
             <group number_of_students="30" teacher="ANA LUCIA CETERTICH BAZZAN, RAFAEL HEITOR BORDINI" id="U">
-                <session room_id="" duration="240" building_id="" weekday="5" start_time="13:30"></session>
+                <session room_id="111" duration="240" building_id="" weekday="5" start_time="13:30"></session>
             </group>
         </course>
         <course name="AGENTES AUTÔNOMOS E SISTEMAS MULTIAGENTES" id="CMP124">
