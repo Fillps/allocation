@@ -30,6 +30,7 @@ public class Tests {
         class1.addRequirement("alunos", "30");
         class1.addRequirement("horario", "13:30");
         class1.addRequirement("dia", "5");
+        class1.addRequirement("duration", "120");
 
         Allocator.Available room1 = new Allocator.Available();
         room1.setId("43425-108");
