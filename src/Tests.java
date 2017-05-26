@@ -1,9 +1,14 @@
+import allocator.Allocator;
 import allocator.Requirement;
+import allocator.ToAllocate;
 import room_allocations.StartDate;
+import room_allocations.Teacher;
 import room_allocations.xml.AllocationType;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by filip on 24/05/2017.
@@ -32,6 +37,47 @@ public class Tests {
         Requirement startDate3 = new StartDate("5", "13:30");
         Requirement startDate4 = new StartDate("4", "15:30");
 
-        System.out.print(startDate1.compare(startDate2) + " | " + startDate1.compare(startDate3) + " | " + startDate1.compare(startDate4) );
+        System.out.print(startDate1.verify(startDate2) + " | " + startDate1.verify(startDate3) + " | " + startDate1.verify(startDate4) );
+    }
+
+    public static void allocatorTest2_0(){
+        Requirement startDate1 = new StartDate("2", "13:30");
+        Requirement startDate2 = new StartDate("4", "13:30");
+        Requirement startDate3 = new StartDate("2", "13:30");
+        Requirement startDate4 = new StartDate("5", "15:30");
+
+        Requirement teacher1 = new Teacher("JOAO", (StartDate) startDate1);
+        Requirement teacher2 = new Teacher("JOAO", (StartDate) startDate2);
+        Requirement teacher3 = new Teacher("JOAO", (StartDate) startDate3);
+        Requirement teacher4 = new Teacher("MARIA", (StartDate) startDate4);
+
+        ToAllocate toAllocate1 = new ToAllocate();
+        toAllocate1.addRequirement(startDate1);
+        toAllocate1.addRequirement(startDate2);
+        toAllocate1.addRequirement(teacher1);
+        toAllocate1.addRequirement(teacher2);
+
+        ToAllocate toAllocate2 = new ToAllocate();
+        toAllocate2.addRequirement(startDate3);
+        toAllocate2.addRequirement(startDate4);
+        toAllocate2.addRequirement(teacher3);
+        toAllocate2.addRequirement(teacher4);
+
+        List<ToAllocate> toAllocateList = new ArrayList<>();
+        toAllocateList.add(toAllocate1);
+        toAllocateList.add(toAllocate2);
+
+        ToAllocate available = new ToAllocate();
+        available.setAnswer("teste");
+        available.setId("1");
+
+        List<ToAllocate> availableList = new ArrayList<>();
+        availableList.add(available);
+
+        Allocator allocator = new Allocator(toAllocateList, availableList);
+
+        System.out.println(allocator.allocate().get(0).getAnswer());
+        System.out.println(allocator.allocate().get(1).getAnswer());
+
     }
 }

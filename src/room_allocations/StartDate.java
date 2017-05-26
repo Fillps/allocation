@@ -14,16 +14,32 @@ public class StartDate implements Requirement {
         this.hour = hour;
     }
 
+
     @Override
-    public int compare(Object o) {
+    public int verify(Requirement o) {
         if (!(o instanceof StartDate))
             return 0;
         StartDate n = (StartDate) o;
         if (day.equals(n.getDay()) && hour.equals(n.getHour())){
-            return 1;
+            return -1;
         }
         else
-            return  -1;
+            return  1;
+    }
+
+    @Override
+    public int needsSaving() {
+        return 1;
+    }
+
+    @Override
+    public String answer() {
+        return null;
+    }
+
+    @Override
+    public boolean setAnswer(String answer) {
+        return false;
     }
 
     public String getDay() {

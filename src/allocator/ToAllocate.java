@@ -7,6 +7,9 @@ import java.util.Map;
 
 public class ToAllocate {
     private String id;
+
+    private String answer;
+
     private List<Requirement> requirements = new ArrayList<>();
 
     public List<Requirement> getRequirements() {
@@ -22,5 +25,13 @@ public class ToAllocate {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 }

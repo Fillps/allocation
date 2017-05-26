@@ -20,7 +20,7 @@ public class Features implements Requirement {
 
 
     @Override
-    public int compare(Object o) {
+    public int verify(Requirement o) {
         if (!(o instanceof Features))
             return 0;
         Features n = (Features) o;
@@ -29,5 +29,20 @@ public class Features implements Requirement {
         }
         else
             return  -1;
+    }
+
+    @Override
+    public int needsSaving() {
+        return 0;
+    }
+
+    @Override
+    public String answer() {
+        return null;
+    }
+
+    @Override
+    public boolean setAnswer(String answer) {
+        return false;
     }
 }

@@ -8,12 +8,16 @@ import allocator.Requirement;
 public class NumberOfPlaces implements Requirement {
     private int seats;
 
+    public NumberOfPlaces(int seats) {
+        this.seats = seats;
+    }
+
     public int getSeats() {
         return seats;
     }
 
     @Override
-    public int compare(Object o) {
+    public int verify(Requirement o) {
         if (!(o instanceof NumberOfPlaces))
             return 0;
         int score;
@@ -24,5 +28,20 @@ public class NumberOfPlaces implements Requirement {
         else
             score = -1;
         return score;
+    }
+
+    @Override
+    public int needsSaving() {
+        return 0;
+    }
+
+    @Override
+    public String answer() {
+        return null;
+    }
+
+    @Override
+    public boolean setAnswer(String answer) {
+        return false;
     }
 }
