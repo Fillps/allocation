@@ -1,3 +1,5 @@
+package room_allocations;
+
 import room_allocations.xml.AllocationType;
 
 import javax.xml.bind.JAXBContext;

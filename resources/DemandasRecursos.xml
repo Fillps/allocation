@@ -92,8 +92,8 @@
 		  </course>
 		- <course name='CATEGORIAS COMPUTACIONAIS N' id='INF05006'>
 		- <group number_of_students='40' teacher='PAULO FERNANDO BLAUTH MENEZES' id='U'>
-		  <session duration='' requires_building_id='' requires_room_id='108' weekday='2' start_time='13:30'/> 
-		  <session duration='' weekday='4' start_time='13:30'/> 
+		  <session duration='120' requires_building_id='' requires_room_id='108' weekday='2' start_time='13:30'/>
+		  <session duration='120' weekday='4' start_time='13:30'/>
 		  </group>
 		  </course>
 		- <course name='CIRCUITOS DIGITAIS' id='INF01058'>
@@ -238,8 +238,8 @@
 		  </course>
 		  <course name='FUNDAMENTOS DE ALGORITMOS' id='INF05008'>
 		 <group number_of_students='40' teacher='ANA LUCIA CETERTICH BAZZAN' id='A'>
-		  <session duration='' requires_building_id='' requires_room_id='ANFA (Anfiteatro Azul)' weekday='1' start_time='13:30'/> 
-		  <session duration='' weekday='3' start_time='13:30'/> 
+		  <session duration='120' requires_building_id='' requires_room_id='ANFA (Anfiteatro Azul)' weekday='1' start_time='13:30'/>
+		  <session duration='120' weekday='3' start_time='13:30'/>
 		  </group>
 		 <group number_of_students='40' teacher='LEILA RIBEIRO' id='B'>
 		  <session room_id='' duration='120' building_id='' weekday='1' start_time='15:30'/> 
@@ -499,8 +499,8 @@
 		  </course>
 		 <course name='REDES DE COMPUTADORES N' id='INF01154'>
 		 <group number_of_students='40' teacher='ALEXANDRE DA SILVA CARISSIMI' id='A, B'>
-		  <session duration='' requires_building_id='' requires_room_id='108' weekday='2' start_time='10:30'/> 
-		  <session duration='' weekday='4' start_time='10:30'/> 
+		  <session duration='120' requires_building_id='' requires_room_id='108' weekday='2' start_time='10:30'/>
+		  <session duration='120' weekday='4' start_time='10:30'/>
 		  </group>
 		 <group number_of_students='20' teacher='VALTER ROESLER' id='A'>
 		  <session room_id='' duration='120' feature_ids='2' building_id='' weekday='5' start_time='08:30'/> 
@@ -549,8 +549,8 @@
 		  </course>
 		 <course name='SISTEMAS DIGITAIS PARA COMPUTADORES A' id='INF01175'>
 		 <group number_of_students='30' teacher='FERNANDA GUSMAO DE LIMA KASTENSMIDT' id='U'>
-		  <session duration='' requires_building_id='' requires_room_id='105' weekday='2' start_time='08:30'/> 
-		  <session duration='' weekday='4' start_time='08:30'/> 
+		  <session duration='120' requires_building_id='' requires_room_id='105' weekday='2' start_time='08:30'/>
+		  <session duration='120' weekday='4' start_time='08:30'/>
 		  </group>
 		  </course>
 		 <course name='SISTEMAS OPERACIONAIS I N' id='INF01142'>

@@ -1,6 +1,8 @@
 import allocator.Allocator;
 import allocator.Requirement;
 import allocator.ToAllocate;
+import room_allocations.Integrator;
+import room_allocations.Parser;
 import room_allocations.StartDate;
 import room_allocations.Teacher;
 import room_allocations.xml.AllocationType;
@@ -79,5 +81,25 @@ public class Tests {
         System.out.println(allocator.allocate().get(0).getAnswer());
         System.out.println(allocator.allocate().get(1).getAnswer());
 
+    }
+
+    public static void integratorTest() throws JAXBException, XMLStreamException {
+        Integrator integrator = new Integrator("resources\\DemandasRecursos.xml");
+
+        //for (CourseType courseType : allocationType.getCourses().getCourse())
+            //System.out.println(courseType.getId());
+        for (ToAllocate toAllocate : integrator.getToAllocateList())
+            System.out.println(toAllocate.getId());
+
+        for (ToAllocate available : integrator.getAvailableList())
+            System.out.println(available.getAnswer());
+        integrator.saveToFile("1");
+    }
+
+    public static void integratorAndAllocatorTest() throws JAXBException, XMLStreamException {
+        Integrator integrator = new Integrator("resources\\DemandasRecursos.xml");
+        integrator.allocate();
+        integrator.saveToFile("resources\\resultados.xml");
+        System.out.print("pronto");
     }
 }

@@ -8,8 +8,8 @@ import java.util.*;
  * Created by filip on 24/05/2017.
  */
 public class Allocator {
-    private List<ToAllocate> toAllocateList;
-    private List<ToAllocate> availableList;
+    protected List<ToAllocate> toAllocateList;
+    protected List<ToAllocate> availableList;
     private List<Requirement> outsideData = new ArrayList<>();
 
 
@@ -36,8 +36,7 @@ public class Allocator {
                     available.addRequirement(toAllocateReq);
                 }
             }
-
-            }
+        }
         return toAllocateList;
     }
 
