@@ -1,4 +1,4 @@
-package room_allocations.xml;//
+package room_xml;//
 // Este arquivo foi gerado pela Arquitetura JavaTM para Implementa��o de Refer�ncia (JAXB) de Bind XML, v2.2.8-b130911.1802 
 // Consulte <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Todas as modifica��es neste arquivo ser�o perdidas ap�s a recompila��o do esquema de origem. 
@@ -16,7 +16,7 @@ import javax.xml.namespace.QName;
  * This object contains factory methods for each 
  * Java group interface and Java element interface
  * generated in the generated package. 
- * <p>An room_allocations.xml.ObjectFactory allows you to programatically
+ * <p>An room_xml.ObjectFactory allows you to programatically
  * construct new instances of the Java representation 
  * for XML group. The Java representation of XML
  * group can consist of schema derived interfaces
@@ -34,7 +34,7 @@ public class ObjectFactory {
     //private final static QName _CoursesTypeCourse_QNAME = new QName("", "course");
 
     /**
-     * Create a new room_allocations.xml.ObjectFactory that can be used to create new instances of schema derived classes for package: generated
+     * Create a new room_xml.ObjectFactory that can be used to create new instances of schema derived classes for package: generated
      * 
      */
     public ObjectFactory() {
@@ -133,18 +133,18 @@ public class ObjectFactory {
      * Create an instance of {@link JAXBElement }{@code <}{@link GroupType }{@code >}}
      * 
      */
-    /*@XmlElementDecl(namespace = "", name = "group", scope = room_allocations.xml.CourseType.class)
-    public JAXBElement<room_allocations.xml.GroupType> createCourseTypeGroup(room_allocations.xml.GroupType value) {
-        return new JAXBElement<room_allocations.xml.GroupType>(_CourseTypeGroup_QNAME, room_allocations.xml.GroupType.class, room_allocations.xml.CourseType.class, value);
+    /*@XmlElementDecl(namespace = "", name = "group", scope = room_xml.CourseType.class)
+    public JAXBElement<room_xml.GroupType> createCourseTypeGroup(room_xml.GroupType value) {
+        return new JAXBElement<room_xml.GroupType>(_CourseTypeGroup_QNAME, room_xml.GroupType.class, room_xml.CourseType.class, value);
     }*/
 
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link CourseType }{@code >}}
      * 
      */
-    /*@XmlElementDecl(namespace = "", name = "course", scope = room_allocations.xml.CoursesType.class)
-    public JAXBElement<room_allocations.xml.CourseType> createCoursesTypeCourse(room_allocations.xml.CourseType value) {
-        return new JAXBElement<room_allocations.xml.CourseType>(_CoursesTypeCourse_QNAME, room_allocations.xml.CourseType.class, room_allocations.xml.CoursesType.class, value);
+    /*@XmlElementDecl(namespace = "", name = "course", scope = room_xml.CoursesType.class)
+    public JAXBElement<room_xml.CourseType> createCoursesTypeCourse(room_xml.CourseType value) {
+        return new JAXBElement<room_xml.CourseType>(_CoursesTypeCourse_QNAME, room_xml.CourseType.class, room_xml.CoursesType.class, value);
     }*/
 
 }

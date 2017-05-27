@@ -1,6 +1,4 @@
-package room_allocations;
-
-import room_allocations.xml.AllocationType;
+package room_xml;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

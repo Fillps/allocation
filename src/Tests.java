@@ -1,11 +1,10 @@
 import allocator.Allocator;
 import allocator.Requirement;
 import allocator.ToAllocate;
-import room_allocations.Integrator;
-import room_allocations.Parser;
+import room_xml.Parser;
 import room_allocations.StartDate;
 import room_allocations.Teacher;
-import room_allocations.xml.AllocationType;
+import room_xml.AllocationType;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
@@ -18,8 +17,8 @@ import java.util.List;
 public class Tests {
 
     public static void importXML(){
-        String path = "resources\\DemandasRecursos.xml";
-        String resultPath = "resources\\resultados.xml";
+        String path = "resources\\DemandasRecursos.room_xml";
+        String resultPath = "resources\\resultados.room_xml";
         try {
             AllocationType allocationType = Parser.unmarshall(path);
 
@@ -84,7 +83,7 @@ public class Tests {
     }
 
     public static void integratorTest() throws JAXBException, XMLStreamException {
-        Integrator integrator = new Integrator("resources\\DemandasRecursos.xml");
+        Integrator integrator = new Integrator("resources\\DemandasRecursos.room_xml");
 
         //for (CourseType courseType : allocationType.getCourses().getCourse())
             //System.out.println(courseType.getId());
@@ -97,9 +96,7 @@ public class Tests {
     }
 
     public static void integratorAndAllocatorTest() throws JAXBException, XMLStreamException {
-        Integrator integrator = new Integrator("resources\\DemandasRecursos.xml");
-        integrator.allocate();
-        integrator.saveToFile("resources\\resultados.xml");
-        System.out.print("pronto");
+        Integrator integrator = new Integrator("resources\\DemandasRecursos.room_xml");
+        integrator.saveToFile("resources\\resultados.room_xml");
     }
 }

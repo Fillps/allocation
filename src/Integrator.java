@@ -1,10 +1,8 @@
-package room_allocations;
-
 import allocator.Allocator;
-import allocator.Requirement;
 
 import allocator.ToAllocate;
-import room_allocations.xml.*;
+import room_allocations.*;
+import room_xml.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
@@ -19,11 +17,11 @@ public class Integrator extends Allocator{
     private AllocationType allocationType;
 
     public Integrator(String path) throws JAXBException, XMLStreamException {
-
         super(new ArrayList<ToAllocate>(), new ArrayList<ToAllocate>());
         this.allocationType = Parser.unmarshall(path);
         integreteToAllocateList();
         integreteAvailableList();
+        allocate();
     }
 
     private void integreteAvailableList(){
