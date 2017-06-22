@@ -31,7 +31,7 @@ public class Allocator {
                     globalRequirements.add(toAllocateReq);
                 }
                 else if(toAllocateReq.needsSaving()==1){ // 1 significa que precisa atualizar o objeto que foi alocado (reservar o horario da sala)
-                    available.addRequirement(toAllocateReq);  
+                    available.addRequirement(toAllocateReq);
                 }
             }
         }
@@ -40,8 +40,8 @@ public class Allocator {
 
     /***
      *
-     * @param toAllocate -> um objeto a ser alocado
-     * @return available -> retorna um objeto que satisfaz todos os requerimentos
+     * @param toAllocate -> um objeto a ser alocado (do toAllocateList)
+     * @return available -> retorna um objeto que satisfaz todos os requerimentos (da availableList)
      */
     private ToAllocate verifyAvailable(ToAllocate toAllocate){
          for (ToAllocate available : availableList){
