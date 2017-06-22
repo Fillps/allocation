@@ -26,7 +26,7 @@ public interface Requirement {
      * @return null if doesn't have the answer
      *         String if has the answer
      */
-   String answer();
+   String answer(); //que sala esta sendo alocada?
 
 
    boolean setAnswer(String answer);

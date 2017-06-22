@@ -6,9 +6,9 @@ import java.util.*;
  * Created by filip on 24/05/2017.
  */
 public class Allocator {
-    protected List<ToAllocate> toAllocateList;
+    protected List<ToAllocate> toAllocateList; //"saida", só falta inserir as salas
     protected List<ToAllocate> availableList;
-    private List<Requirement> globalRequirements = new ArrayList<>();
+    private List<Requirement> globalRequirements = new ArrayList<>(); //professor e turma já estão alocados
 
 
     public Allocator(List<ToAllocate> toAllocateList, List<ToAllocate> availableList) {
@@ -25,10 +25,10 @@ public class Allocator {
                 continue;
             }
             toAllocate.setAnswer(available.getAnswer());
-            for (Requirement toAllocateReq : toAllocate.getRequirements()){
+            for (Requirement toAllocateReq : toAllocate.getRequirements()){ //V caso professor de a mesma aula em duas turmas
                 if (toAllocateReq.needsSaving()==-1){ // -1 significa que precisa salvar nos requerimentos globais
                     toAllocateReq.setAnswer(toAllocate.getAnswer()); // coloca a resposta no requerimento a ser salvo
-                    globalRequirements.add(toAllocateReq);
+                    globalRequirements.add(toAllocateReq); //não soma o numero total de alunos da 2 turmas
                 }
                 else if(toAllocateReq.needsSaving()==1){ // 1 significa que precisa atualizar o objeto que foi alocado (reservar o horario da sala)
                     available.addRequirement(toAllocateReq);
@@ -43,7 +43,7 @@ public class Allocator {
      * @param toAllocate -> um objeto a ser alocado (do toAllocateList)
      * @return available -> retorna um objeto que satisfaz todos os requerimentos (da availableList)
      */
-    private ToAllocate verifyAvailable(ToAllocate toAllocate){
+    private ToAllocate verifyAvailable(ToAllocate toAllocate){ //
          for (ToAllocate available : availableList){
              boolean found = true;
              for(Requirement requirement : toAllocate.getRequirements()){
