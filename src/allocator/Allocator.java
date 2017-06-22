@@ -43,16 +43,16 @@ public class Allocator {
      * @param toAllocate -> um objeto a ser alocado (do toAllocateList)
      * @return available -> retorna um objeto que satisfaz todos os requerimentos (da availableList)
      */
-    private ToAllocate verifyAvailable(ToAllocate toAllocate){ //
+    private ToAllocate verifyAvailable(ToAllocate toAllocate){ 
          for (ToAllocate available : availableList){
-             boolean found = true;
+             boolean found = true; // remover found para retornar direto uma answer
              for(Requirement requirement : toAllocate.getRequirements()){
                  Requirement out = verifyGlobalRequirements(requirement); //verifica se o requerimento existe nos requerimentos globais
                  if (out!=null){                                          // se ele existe, entao ja temos a resposta, que esta contida nesse requerimento
                      return getAvailableFromAnswer(out.answer());
                  }
                  else if (!verifyRequeriment(requirement, available))     // se ele nao existe, continua testando os outros requerimentos
-                    found = false;
+                    found = false; //trocar para teste das scores
             }
             if (found)
                 return available;
