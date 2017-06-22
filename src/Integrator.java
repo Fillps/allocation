@@ -24,7 +24,7 @@ public class Integrator extends Allocator{
         allocate();
     }
 
-    private void integreteAvailableList(){
+    private void integrateAvailableList(){
         for (BuildingType buildingType : allocationType.getBuildings().getBuilding()){
             for (RoomType roomType : buildingType.getRoom()){
                 if (roomType.getAvailableForAllocation()==null){
@@ -40,7 +40,7 @@ public class Integrator extends Allocator{
 
     }
 
-    private void integreteToAllocateList(){
+    private void integrateToAllocateList(){
         for (CourseType courseType : allocationType.getCourses().getCourse()){
             for (GroupType groupType : courseType.getGroup()){
                 boolean hasFeatures = false;
