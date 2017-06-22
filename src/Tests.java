@@ -17,8 +17,8 @@ import java.util.List;
 public class Tests {
 
     public static void importXML(){
-        String path = "resources\\DemandasRecursos.room_xml";
-        String resultPath = "resources\\resultados.room_xml";
+        String path = "resources\\DemandasRecursos.xml";
+        String resultPath = "resources\\resultados.xml";
         try {
             AllocationType allocationType = Parser.unmarshall(path);
 
@@ -83,7 +83,7 @@ public class Tests {
     }
 
     public static void integratorTest() throws JAXBException, XMLStreamException {
-        Integrator integrator = new Integrator("resources\\DemandasRecursos.room_xml");
+        Integrator integrator = new Integrator("resources\\DemandasRecursos.xml");
 
         //for (CourseType courseType : allocationType.getCourses().getCourse())
             //System.out.println(courseType.getId());
@@ -96,7 +96,7 @@ public class Tests {
     }
 
     public static void integratorAndAllocatorTest() throws JAXBException, XMLStreamException {
-        Integrator integrator = new Integrator("resources\\DemandasRecursos.room_xml");
-        integrator.saveToFile("resources\\resultados.room_xml");
+        Integrator integrator = new Integrator("resources\\DemandasRecursos.xml");
+        integrator.saveToFile("resources\\resultados.xml");
     }
 }

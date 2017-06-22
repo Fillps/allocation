@@ -1,7 +1,5 @@
 package allocator;
 
-import com.sun.org.apache.regexp.internal.RE;
-
 import java.util.*;
 
 /**
@@ -10,7 +8,7 @@ import java.util.*;
 public class Allocator {
     protected List<ToAllocate> toAllocateList;
     protected List<ToAllocate> availableList;
-    private List<Requirement> outsideData = new ArrayList<>();
+    private List<Requirement> globalRequirements = new ArrayList<>();
 
 
     public Allocator(List<ToAllocate> toAllocateList, List<ToAllocate> availableList) {
@@ -28,27 +26,32 @@ public class Allocator {
             }
             toAllocate.setAnswer(available.getAnswer());
             for (Requirement toAllocateReq : toAllocate.getRequirements()){
-                if (toAllocateReq.needsSaving()==-1){
-                    toAllocateReq.setAnswer(toAllocate.getAnswer());
-                    outsideData.add(toAllocateReq);
+                if (toAllocateReq.needsSaving()==-1){ // -1 significa que precisa salvar nos requerimentos globais
+                    toAllocateReq.setAnswer(toAllocate.getAnswer()); // coloca a resposta no requerimento a ser salvo
+                    globalRequirements.add(toAllocateReq);
                 }
-                else if(toAllocateReq.needsSaving()==1){
-                    available.addRequirement(toAllocateReq);
+                else if(toAllocateReq.needsSaving()==1){ // 1 significa que precisa atualizar o objeto que foi alocado (reservar o horario da sala)
+                    available.addRequirement(toAllocateReq);  
                 }
             }
         }
         return toAllocateList;
     }
 
+    /***
+     *
+     * @param toAllocate -> um objeto a ser alocado
+     * @return available -> retorna um objeto que satisfaz todos os requerimentos
+     */
     private ToAllocate verifyAvailable(ToAllocate toAllocate){
          for (ToAllocate available : availableList){
              boolean found = true;
              for(Requirement requirement : toAllocate.getRequirements()){
-                 Requirement out = verifyOutside(requirement);
-                 if (out!=null){
+                 Requirement out = verifyGlobalRequirements(requirement); //verifica se o requerimento existe nos requerimentos globais
+                 if (out!=null){                                          // se ele existe, entao ja temos a resposta, que esta contida nesse requerimento
                      return getAvailableFromAnswer(out.answer());
                  }
-                 else if (!verifyRequeriment(requirement, available))
+                 else if (!verifyRequeriment(requirement, available))     // se ele nao existe, continua testando os outros requerimentos
                     found = false;
             }
             if (found)
@@ -67,9 +70,9 @@ public class Allocator {
         return true;
     }
 
-    private Requirement verifyOutside(Requirement requirement){
+    private Requirement verifyGlobalRequirements(Requirement requirement){
         if(requirement.needsSaving()==-1)
-            for (Requirement out : outsideData)
+            for (Requirement out : globalRequirements)
                 if (requirement.verify(out)==-1 && out.answer()!=null)
                     return out;
         return null;
