@@ -44,6 +44,8 @@ public class Allocator {
      * @return available -> retorna um objeto que satisfaz todos os requerimentos (da availableList)
      */
     private ToAllocate verifyAvailable(ToAllocate toAllocate){ 
+        if (toAllocate.getId().equals("CMP182#U"))
+            System.out.println("haha");
         int best_score = 0;
         ToAllocate best_fit = null;
         for (ToAllocate available : availableList){

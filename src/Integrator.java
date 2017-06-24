@@ -8,6 +8,8 @@ import room_xml.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,42 +55,31 @@ public class Integrator extends Allocator{
                 boolean hasFeatures = false;
                 ToAllocate toAllocate = null;
                 for (SessionType sessionType : groupType.getSession()){
-                    if (toAllocate==null){
-                        toAllocate = new ToAllocate();
-                        if ((!hasFeatures && sessionType.getFeatureIds()!=null) || (!hasFeatures && sessionType.getFeaturesIds()!=null))
+                    if (toAllocate==null){              //primeira aula -> cria uma nova alocacao
+                        toAllocate = createToAllocateWithoutFeatures(courseType.getId(),groupType,sessionType);
+                        if ((!hasFeatures && sessionType.getFeatureIds()!=null) || (!hasFeatures && sessionType.getFeaturesIds()!=null))  // verifica sem tem features na primeira aula
                             hasFeatures = true;
                     }
-                    else if (hasFeatures && (sessionType.getFeaturesIds()==null && sessionType.getFeatureIds()==null)){
+                    else if (hasFeatures && (sessionType.getFeaturesIds()==null && sessionType.getFeatureIds()==null)){  //aula anterior teve features, essa nao tem
                         toAllocateList.add(toAllocate);
-                        toAllocate = new ToAllocate();
+                        toAllocate = createToAllocateWithoutFeatures(courseType.getId(),groupType,sessionType);
                         hasFeatures = false;
                     }
-                    else if (!hasFeatures && sessionType.getFeatureIds()!=null){
+                    else if (!hasFeatures && (sessionType.getFeatureIds()!=null || sessionType.getFeaturesIds()!=null)){ //aula anterior tem features, essa sim
                         toAllocateList.add(toAllocate);
-                        toAllocate = new ToAllocate();
+                        toAllocate = createToAllocateWithoutFeatures(courseType.getId(),groupType,sessionType);
                         hasFeatures = true;
-                        toAllocate.addRequirement(new Features(sessionType.getFeatureIds()));
+                        if (sessionType.getFeatureIds()!=null)
+                            toAllocate.addRequirement(new Features(sessionType.getFeatureIds()));
+                        else
+                            toAllocate.addRequirement(new Features(sessionType.getFeaturesIds()));
                     }
-                    else if (!hasFeatures && sessionType.getFeaturesIds()!=null){
-                        toAllocateList.add(toAllocate);
-                        toAllocate = new ToAllocate();
-                        hasFeatures = true;
-                        toAllocate.addRequirement(new Features(sessionType.getFeaturesIds()));
-                    }
-
-                    toAllocate.setId(courseType.getId() + "#" + groupType.getId());
-
-                    toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
-
-                    int classes = Integer.valueOf(sessionType.getDuration())/120;
-                    for (int i = 0; i < classes; i++){
-                        String time = sessionType.getStartTime();
-                        int hours = Integer.parseInt(time.substring(0,1));
-                        hours += i*2;
-                        time.replaceFirst(time.substring(0,1), String.valueOf(hours));
-                        StartDate startDate = new StartDate(sessionType.getWeekday(), time);
-                        toAllocate.addRequirement(startDate);
-                        toAllocate.addRequirement(new Teacher(groupType.getTeacher(), startDate));
+                    else {              // aula sera na mesma sala anterior, senda assim, so adicionamos novos horarios para alocar, assim como o professor naquele horario
+                        List<StartDate> startDateList = createStartDate(Integer.parseInt(sessionType.getDuration()), sessionType.getStartTime(), sessionType.getWeekday());
+                        for (StartDate startDate : startDateList){
+                            toAllocate.addRequirement(startDate);
+                            toAllocate.addRequirement(new Teacher(groupType.getTeacher(), startDate));
+                        }
                     }
 
 
@@ -96,6 +87,34 @@ public class Integrator extends Allocator{
                 toAllocateList.add(toAllocate);
             }
         }
+    }
+
+    private ToAllocate createToAllocateWithoutFeatures(String course, GroupType groupType, SessionType sessionType){
+
+        ToAllocate toAllocate = new ToAllocate();
+        toAllocate.setId(course + "#" + groupType.getId());
+        toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
+
+        List<StartDate> startDateList = createStartDate(Integer.parseInt(sessionType.getDuration()), sessionType.getStartTime(), sessionType.getWeekday());
+        for (StartDate startDate : startDateList){
+            toAllocate.addRequirement(startDate);
+            toAllocate.addRequirement(new Teacher(groupType.getTeacher(), startDate));
+        }
+        return toAllocate;
+    }
+
+    private List<StartDate> createStartDate(int duration, String startTime, String day){
+        List<StartDate> startDateList = new ArrayList<>();
+        int classes = duration/120;
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+
+        for (int i = 0; i < classes; i++){
+            int minutesToAdd = i*120;
+            LocalTime lTime = LocalTime.parse(startTime);
+            String finalTime = timeFormatter.format(lTime.plusMinutes(minutesToAdd));
+            startDateList.add(new StartDate(day, finalTime));
+        }
+        return startDateList;
     }
 
     public void saveToFile(String path) throws JAXBException {
