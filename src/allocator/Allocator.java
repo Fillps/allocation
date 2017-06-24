@@ -21,7 +21,7 @@ public class Allocator {
         for (ToAllocate toAllocate : toAllocateList){
             ToAllocate available = verifyAvailable(toAllocate);
             if (available==null){
-                toAllocate.setAnswer("not found");
+                toAllocate.setAnswer("not found#not found");
                 continue;
             }
             toAllocate.setAnswer(available.getAnswer());
@@ -44,30 +44,39 @@ public class Allocator {
      * @return available -> retorna um objeto que satisfaz todos os requerimentos (da availableList)
      */
     private ToAllocate verifyAvailable(ToAllocate toAllocate){ 
-         for (ToAllocate available : availableList){
-             boolean found = true; // remover found para retornar direto uma answer
+        if (toAllocate.getId().equals("CMP182#U"))
+            System.out.println("haha");
+        int best_score = 0;
+        ToAllocate best_fit = null;
+        for (ToAllocate available : availableList){
+             int current_score = 0;
              for(Requirement requirement : toAllocate.getRequirements()){
                  Requirement out = verifyGlobalRequirements(requirement); //verifica se o requerimento existe nos requerimentos globais
-                 if (out!=null){                                          // se ele existe, entao ja temos a resposta, que esta contida nesse requerimento
+                 if (out!=null)                                          // se ele existe, entao ja temos a resposta, que esta contida nesse requerimento
                      return getAvailableFromAnswer(out.answer());
+                 else if(verifyRequeriment(requirement, available)<0){
+                     current_score = -1;
+                     break;
                  }
-                 else if (!verifyRequeriment(requirement, available))     // se ele nao existe, continua testando os outros requerimentos
-                    found = false; //trocar para teste das scores
-            }
-            if (found)
-                return available;
+                 current_score += verifyRequeriment(requirement, available);
+             }
+             if (current_score > best_score){
+                 best_score = current_score;
+                 best_fit = available;
+             }
         }
-        return null;
+        return best_fit;
     }
 
-    private boolean verifyRequeriment(Requirement requirement, ToAllocate available){
+    private int verifyRequeriment(Requirement requirement, ToAllocate available){ //compara um requirement de toAllocate com todos os requiments de available
 
+        int score;
         for (Requirement availableReq : available.getRequirements()){
-            if(requirement.verify(availableReq)<0){
-                return false;
-            }
+            score = requirement.verify(availableReq);
+            if(score != 0)
+                return score;
         }
-        return true;
+        return 0;
     }
 
     private Requirement verifyGlobalRequirements(Requirement requirement){
