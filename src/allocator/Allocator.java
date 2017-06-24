@@ -21,7 +21,7 @@ public class Allocator {
         for (ToAllocate toAllocate : toAllocateList){
             ToAllocate available = verifyAvailable(toAllocate);
             if (available==null){
-                toAllocate.setAnswer("not found");
+                toAllocate.setAnswer("not found#not found");
                 continue;
             }
             toAllocate.setAnswer(available.getAnswer());

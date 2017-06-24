@@ -17,7 +17,7 @@
                 <session room_id="106" duration="120" building_id="43413(67)" weekday="4" start_time="13:30"></session>
             </group>
             <group number_of_students="20" teacher="ANDERSON MACIEL" id="A">
-                <session room_id="not found" duration="120" building_id="" weekday="5" start_time="13:30" feature_ids="1"></session>
+                <session room_id="not found" duration="120" building_id="not found" weekday="5" start_time="13:30" feature_ids="1"></session>
             </group>
             <group number_of_students="20" teacher="ANDERSON MACIEL" id="B">
                 <session room_id="105" duration="120" building_id="43413(67)" weekday="5" start_time="15:30" feature_ids="1"></session>
@@ -30,17 +30,17 @@
                 <session room_id="105" duration="120" building_id="43413(67)" weekday="1" start_time="13:30" feature_ids="1"></session>
             </group>
             <group number_of_students="17" teacher="ULISSES BRISOLARA CORREA" id="D">
-                <session room_id="not found" duration="120" building_id="" weekday="3" start_time="13:30" feature_ids="1"></session>
+                <session room_id="not found" duration="120" building_id="not found" weekday="3" start_time="13:30" feature_ids="1"></session>
             </group>
             <group number_of_students="39" teacher="MARA ABEL" id="E, F">
                 <session room_id="105" duration="120" building_id="43413(67)" weekday="1" start_time="13:30"></session>
                 <session room_id="105" duration="120" building_id="43413(67)" weekday="3" start_time="13:30"></session>
             </group>
             <group number_of_students="22" teacher="MARA ABEL" id="E">
-                <session room_id="not found" duration="120" building_id="" weekday="5" start_time="13:30" feature_ids="1"></session>
+                <session room_id="not found" duration="120" building_id="not found" weekday="5" start_time="13:30" feature_ids="1"></session>
             </group>
             <group number_of_students="17" teacher="MARA ABEL" id="F">
-                <session room_id="not found" duration="120" building_id="" weekday="5" start_time="15:30" feature_ids="1"></session>
+                <session room_id="not found" duration="120" building_id="not found" weekday="5" start_time="15:30" feature_ids="1"></session>
             </group>
         </course>
         <course name="ANÁLISE E DESENVOLVIMENTO DE ALGORITMOS" id="CMP155">
@@ -71,8 +71,8 @@
                 <session room_id="106" duration="120" building_id="43413(67)" weekday="3" start_time="08:30"></session>
             </group>
             <group number_of_students="10" teacher="JOAO CESAR NETTO" id="B">
-                <session room_id="not found" duration="120" building_id="" weekday="2" start_time="10:30"></session>
-                <session room_id="not found" duration="120" building_id="" weekday="4" start_time="10:30"></session>
+                <session room_id="not found" duration="120" building_id="not found" weekday="2" start_time="10:30"></session>
+                <session room_id="not found" duration="120" building_id="not found" weekday="4" start_time="10:30"></session>
             </group>
             <group number_of_students="35" teacher="JOAO CESAR NETTO" id="C">
                 <session room_id="105" duration="120" building_id="43413(67)" weekday="2" start_time="08:30"></session>
@@ -330,8 +330,8 @@
         </course>
         <course name="INTRODUÇÃO AO PROCESSAMENTO PARALELO E DISTRIBUÍDO" id="CMP165">
             <group number_of_students="30" teacher="JPHILIPPE NAVAUX" id="U">
-                <session room_id="105" duration="120" building_id="43413(67)" weekday="2" start_time="15:30"></session>
-                <session room_id="105" duration="120" building_id="43413(67)" weekday="4" start_time="15:30"></session>
+                <session room_id="" duration="120" building_id="" weekday="2" start_time="15:30"></session>
+                <session room_id="" duration="120" building_id="" weekday="4" start_time="15:30"></session>
             </group>
         </course>
         <course name="INTRODUÇÃO À INFORMÁTICA" id="INF01210">
@@ -357,7 +357,7 @@
                 <session room_id="105" duration="240" building_id="43413(67)" weekday="5" start_time="08:30"></session>
             </group>
             <group number_of_students="25" teacher="ROQUE ANTONIO LIMA" id="H">
-                <session room_id="not found" duration="240" building_id="" weekday="5" start_time="13:30"></session>
+                <session room_id="not found" duration="240" building_id="not found" weekday="5" start_time="13:30"></session>
             </group>
         </course>
         <course name="INTRODUÇÃO À PESQUISA EM INFORMÁTICA" id="INF01049">
@@ -476,14 +476,14 @@
         </course>
         <course name="PROGRAMAÇÃO DISTRIBUÍDA E PARALELA" id="INF01008">
             <group number_of_students="40" teacher="CLAUDIO FERNANDO RESIN GEYER" id="U">
-                <session room_id="106" duration="120" building_id="43413(67)" weekday="2" start_time="08:30"></session>
+                <session room_id="105" duration="120" building_id="43425(73)" weekday="2" start_time="08:30"></session>
                 <session room_id="105" duration="120" building_id="43425(73)" weekday="4" start_time="08:30"></session>
             </group>
         </course>
         <course name="PROJETO E TESTE DE SISTEMAS VLSI" id="INF01008">
             <group number_of_students="40" teacher="FERNANDA GUSMÃO DE LIMA KASTENSMIDT" id="U">
-                <session room_id="106" duration="120" building_id="43413(67)" weekday="2" start_time="13:30"></session>
-                <session room_id="105" duration="120" building_id="43425(73)" weekday="4" start_time="13:30"></session>
+                <session room_id="" duration="120" building_id="" weekday="2" start_time="13:30"></session>
+                <session room_id="" duration="120" building_id="" weekday="4" start_time="13:30"></session>
             </group>
         </course>
         <course name="PROTOCOLOS DE COMUNICAÇÃO" id="INF01002">
@@ -510,7 +510,7 @@
                 <session room_id="105" duration="120" building_id="43413(67)" weekday="5" start_time="10:30" feature_ids="2"></session>
             </group>
             <group number_of_students="20" teacher="VALTER ROESLER" id="C">
-                <session room_id="not found" duration="120" building_id="" weekday="5" start_time="13:30" feature_ids="2"></session>
+                <session room_id="not found" duration="120" building_id="not found" weekday="5" start_time="13:30" feature_ids="2"></session>
             </group>
             <group number_of_students="40" teacher="ANTONIO MARINHO PILLA BARCELLOS" id="C, D">
                 <session room_id="106" duration="120" building_id="43413(67)" weekday="1" start_time="13:30"></session>
@@ -646,7 +646,7 @@
         </course>
         <course name="TÓPICOS ESPECIAIS EM COMPUTAÇÃO XXII" id="INF01066">
             <group number_of_students="20" teacher="MANUEL MENEZES DE OLIVEIRA NETO" id="U">
-                <session room_id="not found" duration="120" building_id="" weekday="5" start_time="13:30"></session>
+                <session room_id="not found" duration="120" building_id="not found" weekday="5" start_time="13:30"></session>
             </group>
         </course>
     </courses>

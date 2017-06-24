@@ -1,6 +1,8 @@
 import allocator.Allocator;
 
+import allocator.Requirement;
 import allocator.ToAllocate;
+import com.sun.org.apache.regexp.internal.RE;
 import room_allocations.*;
 import room_xml.*;
 
@@ -95,36 +97,43 @@ public class Integrator extends Allocator{
 
     public void saveToFile(String path) throws JAXBException {
         for(ToAllocate toAllocate : toAllocateList){
-            String[] ids = toAllocate.getId().split("#");
-            setRoomID(ids[0], ids[1], toAllocate.getAnswer());
-        }
-        for(ToAllocate toAllocate : toAllocateList){
-            String[] ids = toAllocate.getId().split("#");
-            setRoomID(ids[0], ids[1], toAllocate.getAnswer());
+            String[] ids = toAllocate.getId().split("#"); //id -> course#group
+            String[] answers = toAllocate.getAnswer().split("#"); //answer -> building#room
+            for (String day : getDaysFromRequirements(toAllocate.getRequirements()))
+                setRoomID(ids[0], ids[1], answers[1],answers[0],day);
         }
         Parser.marshall(allocationType, path);
     }
 
-    private void setRoomID(String course, String group, String answer){
-        for (CourseType courseType : allocationType.getCourses().getCourse()){
+    private void setRoomID(String course, String group, String room, String building, String day){
+       GroupType groupType = findGroup(course,group);
+       if (groupType==null)
+           return;
+       for(SessionType sessionType : groupType.getSession()) {
+           if (sessionType.getWeekday().equals(day))
+               sessionType.setBuildingId(building);
+               sessionType.setRoomId(room);
+       }
+    }
+
+    private GroupType findGroup(String course, String group){
+        for (CourseType courseType : allocationType.getCourses().getCourse())
             if (courseType.getId().equals(course))
-                for (GroupType groupType : courseType.getGroup()){
+                for (GroupType groupType : courseType.getGroup())
                     if (groupType.getId().equals(group))
-                        for(SessionType sessionType : groupType.getSession()){
-                            if(sessionType.getRoomId()==null || sessionType.getRoomId().length()==0){
-                                String[] ids = answer.split("#");
-                                if (ids.length==1)
-                                    sessionType.setRoomId(answer);
-                                else if(ids.length==2){
-                                    sessionType.setBuildingId(ids[0]);
-                                    sessionType.setRoomId(ids[1]);
-                                }
-                                return;
-                            }
-                        }
-                }
+                        return groupType;
+        return null;
+    }
+
+    private List<String> getDaysFromRequirements(List<Requirement> requirements){
+        List<String> results = new ArrayList<>();
+        for (Requirement requirement : requirements){
+            if(requirement instanceof StartDate){
+                StartDate startDate = (StartDate) requirement;
+                results.add(startDate.getDay());
+            }
         }
-        return;
+        return results;
     }
 
 
