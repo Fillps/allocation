@@ -28,7 +28,7 @@ public class Features implements Requirement {
             return 1;
         }
         else
-            return  -1;
+            return  0;
     }
 
     @Override
@@ -39,6 +39,11 @@ public class Features implements Requirement {
     @Override
     public String answer() {
         return null;
+    }
+
+    @Override
+    public boolean isExclusive() {
+        return false;
     }
 
     @Override

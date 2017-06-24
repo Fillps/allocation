@@ -28,6 +28,7 @@ public interface Requirement {
      */
    String answer(); //que sala esta sendo alocada?
 
+   boolean isExclusive();
 
    boolean setAnswer(String answer);
 }

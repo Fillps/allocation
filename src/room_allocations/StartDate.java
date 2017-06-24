@@ -24,7 +24,7 @@ public class StartDate implements Requirement {
             return -1;
         }
         else
-            return  1;
+            return  0;
     }
 
     @Override
@@ -35,6 +35,11 @@ public class StartDate implements Requirement {
     @Override
     public String answer() {
         return null;
+    }
+
+    @Override
+    public boolean isExclusive() {
+        return true;
     }
 
     @Override

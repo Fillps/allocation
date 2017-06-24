@@ -272,8 +272,8 @@
 		  </course>
 		 <course name='FUNDAMENTOS DE PROCESSAMENTO DE IMAGENS' id='INF01046'>
 		 <group number_of_students='40' teacher='JACOB SCHARCANSKI' id='U'>
-		  <session room_id='' duration='120' features_ids='1' building_id='' weekday='2' start_time='10:30'/> 
-		  <session room_id='' duration='120' features_ids='1' building_id='' weekday='4' start_time='10:30'/> 
+		  <session room_id='' duration='120' feature_ids='1' building_id='' weekday='2' start_time='10:30'/>
+		  <session room_id='' duration='120' feature_ids='1' building_id='' weekday='4' start_time='10:30'/>
 		  </group>
 		  </course>
 		 <course name='FUNDAMENTOS DE TOLERÂNCIA A FALHAS' id='INF01209'>
@@ -327,7 +327,7 @@
 		  <session room_id='' duration='120' building_id='' weekday='3' start_time='13:30'/>
 		  </group>
 		  </course>
-		  <course name='INTRODUÇÃO AO PROCESSAMENTO PARALELO E DISTRIBUÍDO' id='CMP165'>
+		  <course name='INTRODUÇÃO AO PROCESSAMENTO PARALELO E DISTRIBUÍDO' id='CMP165?'>
 		 <group number_of_students='30' teacher='JPHILIPPE NAVAUX' id='U'>
 		  <session room_id='' duration='120' building_id='' weekday='2' start_time='15:30'/> 
 		  <session room_id='' duration='120' building_id='' weekday='4' start_time='15:30'/>

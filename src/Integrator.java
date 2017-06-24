@@ -57,22 +57,21 @@ public class Integrator extends Allocator{
                 for (SessionType sessionType : groupType.getSession()){
                     if (toAllocate==null){              //primeira aula -> cria uma nova alocacao
                         toAllocate = createToAllocateWithoutFeatures(courseType.getId(),groupType,sessionType);
-                        if ((!hasFeatures && sessionType.getFeatureIds()!=null) || (!hasFeatures && sessionType.getFeaturesIds()!=null))  // verifica sem tem features na primeira aula
+                        if (!hasFeatures && sessionType.getFeatureIds()!=null) {  // verifica sem tem features na primeira aula
                             hasFeatures = true;
+                            toAllocate.addRequirement(new Features(sessionType.getFeatureIds()));
+                        }
                     }
-                    else if (hasFeatures && (sessionType.getFeaturesIds()==null && sessionType.getFeatureIds()==null)){  //aula anterior teve features, essa nao tem
+                    else if (hasFeatures && sessionType.getFeatureIds()==null){  //aula anterior teve features, essa nao tem
                         toAllocateList.add(toAllocate);
                         toAllocate = createToAllocateWithoutFeatures(courseType.getId(),groupType,sessionType);
                         hasFeatures = false;
                     }
-                    else if (!hasFeatures && (sessionType.getFeatureIds()!=null || sessionType.getFeaturesIds()!=null)){ //aula anterior tem features, essa sim
+                    else if (!hasFeatures && sessionType.getFeatureIds()!=null){ //aula anterior tem features, essa sim
                         toAllocateList.add(toAllocate);
                         toAllocate = createToAllocateWithoutFeatures(courseType.getId(),groupType,sessionType);
                         hasFeatures = true;
-                        if (sessionType.getFeatureIds()!=null)
-                            toAllocate.addRequirement(new Features(sessionType.getFeatureIds()));
-                        else
-                            toAllocate.addRequirement(new Features(sessionType.getFeaturesIds()));
+                        toAllocate.addRequirement(new Features(sessionType.getFeatureIds()));
                     }
                     else {              // aula sera na mesma sala anterior, senda assim, so adicionamos novos horarios para alocar, assim como o professor naquele horario
                         List<StartDate> startDateList = createStartDate(Integer.parseInt(sessionType.getDuration()), sessionType.getStartTime(), sessionType.getWeekday());
@@ -81,8 +80,6 @@ public class Integrator extends Allocator{
                             toAllocate.addRequirement(new Teacher(groupType.getTeacher(), startDate));
                         }
                     }
-
-
                 }
                 toAllocateList.add(toAllocate);
             }
@@ -120,6 +117,8 @@ public class Integrator extends Allocator{
     public void saveToFile(String path) throws JAXBException {
         for(ToAllocate toAllocate : toAllocateList){
             String[] ids = toAllocate.getId().split("#"); //id -> course#group
+            if (toAllocate.getId().equals("INF01058#A"))
+                System.out.println("as");
             String[] answers = toAllocate.getAnswer().split("#"); //answer -> building#room
             for (String day : getDaysFromRequirements(toAllocate.getRequirements()))
                 setRoomID(ids[0], ids[1], answers[1],answers[0],day);
@@ -132,9 +131,10 @@ public class Integrator extends Allocator{
        if (groupType==null)
            return;
        for(SessionType sessionType : groupType.getSession()) {
-           if (sessionType.getWeekday().equals(day))
+           if (sessionType.getWeekday().equals(day)){
                sessionType.setBuildingId(building);
                sessionType.setRoomId(room);
+           }
        }
     }
 

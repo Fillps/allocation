@@ -22,8 +22,8 @@ public class NumberOfPlaces implements Requirement {
             return 0;
         int score;
         NumberOfPlaces n = (NumberOfPlaces) o;
-        if (seats>= n.getSeats()){
-            score = 100*n.getSeats()/seats;
+        if (seats<= n.getSeats()){
+            score = 100*seats/n.getSeats();
         }
         else
             score = -1;
@@ -38,6 +38,11 @@ public class NumberOfPlaces implements Requirement {
     @Override
     public String answer() {
         return null;
+    }
+
+    @Override
+    public boolean isExclusive() {
+        return true;
     }
 
     @Override

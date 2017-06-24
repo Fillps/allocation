@@ -3,6 +3,8 @@ package allocator;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import room_allocations.Features;
+import room_allocations.NumberOfPlaces;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +21,12 @@ class AllocatorTest {
     }
 
     @Test
-    void allocate() {
+    void verifyRequirementTest() {
+        ToAllocate toAllocate = new ToAllocate();
+        toAllocate.addRequirement(new Features("2"));
+        toAllocate.addRequirement(new NumberOfPlaces(20));
+
+
     }
 
 }

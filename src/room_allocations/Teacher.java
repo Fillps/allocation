@@ -37,6 +37,11 @@ public class Teacher implements Requirement{
     }
 
     @Override
+    public boolean isExclusive() {
+        return true;
+    }
+
+    @Override
     public boolean setAnswer(String answer) {
         this.roomId = answer;
         return true;

@@ -8,6 +8,7 @@ public class Main {
 
         try {
             Tests.integratorAndAllocatorTest();
+            return;
         } catch (JAXBException e) {
             e.printStackTrace();
         } catch (XMLStreamException e) {
