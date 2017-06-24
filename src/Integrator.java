@@ -33,8 +33,11 @@ public class Integrator extends Allocator{
                     ToAllocate available = new ToAllocate();
                     available.setAnswer(buildingType.getId()+ "#" + roomType.getId());
                     available.addRequirement(new NumberOfPlaces(Integer.parseInt(roomType.getNumberOfPlaces())));
-                    if (roomType.getFeatureIds()!=null)
-                        available.addRequirement(new Features(roomType.getFeatureIds()));
+                    if (roomType.getFeatureIds()!=null) {
+                        String[] features = roomType.getFeatureIds().split(", ");
+                        for (String feature : features)
+                            available.addRequirement(new Features(feature));
+                    }
                     else
                         available.addRequirement(new Features("0"));
                     availableList.add(available);
