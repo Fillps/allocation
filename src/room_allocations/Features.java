@@ -7,7 +7,7 @@ import allocator.Requirement;
  */
 public class Features implements Requirement {
 
-    private String id; // ids para sala normal(sem features) ou laboratorio
+    private String id; // ids para sala normal(sem features) = 0 ou laboratorio = 1 a 10
 
     public Features(String id) {
         this.id = id;

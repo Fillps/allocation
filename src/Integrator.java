@@ -19,8 +19,8 @@ public class Integrator extends Allocator{
     public Integrator(String path) throws JAXBException, XMLStreamException {
         super(new ArrayList<ToAllocate>(), new ArrayList<ToAllocate>());
         this.allocationType = Parser.unmarshall(path);
-        integreteToAllocateList();
-        integreteAvailableList();
+        integrateToAllocateList();
+        integrateAvailableList();
         allocate();
     }
 
@@ -33,6 +33,8 @@ public class Integrator extends Allocator{
                     available.addRequirement(new NumberOfPlaces(Integer.parseInt(roomType.getNumberOfPlaces())));
                     if (roomType.getFeatureIds()!=null)
                         available.addRequirement(new Features(roomType.getFeatureIds()));
+                    else
+                        available.addRequirement(new Features("0"));
                     availableList.add(available);
                 }
             }
