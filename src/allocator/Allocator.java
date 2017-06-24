@@ -46,16 +46,17 @@ public class Allocator {
     private ToAllocate verifyAvailable(ToAllocate toAllocate){ 
         int best_score = 0;
         ToAllocate best_fit = null;
-
         for (ToAllocate available : availableList){
              int current_score = 0;
              for(Requirement requirement : toAllocate.getRequirements()){
                  Requirement out = verifyGlobalRequirements(requirement); //verifica se o requerimento existe nos requerimentos globais
-                 if (out!=null){                                          // se ele existe, entao ja temos a resposta, que esta contida nesse requerimento
+                 if (out!=null)                                          // se ele existe, entao ja temos a resposta, que esta contida nesse requerimento
                      return getAvailableFromAnswer(out.answer());
+                 else if(verifyRequeriment(requirement, available)<0){
+                     current_score = -1;
+                     break;
                  }
-                 else
-                    current_score += verifyRequeriment(requirement, available);
+                 current_score += verifyRequeriment(requirement, available);
              }
              if (current_score > best_score){
                  best_score = current_score;
