@@ -16,6 +16,9 @@ public class Allocator {
         this.availableList = availableList;
     }
 
+    public Allocator() {
+    }
+
     public List<ToAllocate> allocate(){
 
         for (ToAllocate toAllocate : toAllocateList){
@@ -47,33 +50,40 @@ public class Allocator {
         int best_score = Integer.MAX_VALUE;
         ToAllocate best_fit = null;
         for (ToAllocate available : availableList){
+
              int current_score = 0;
+             boolean accept = true;
              for(Requirement requirement : toAllocate.getRequirements()){
                  Requirement out = verifyGlobalRequirements(requirement); //verifica se o requerimento existe nos requerimentos globais
                  if (out!=null)                                          // se ele existe, entao ja temos a resposta, que esta contida nesse requerimento
                      return getAvailableFromAnswer(out.answer());
-                 else if(verifyRequeriment(requirement, available)<0){
+                 int score = verifyRequeriment(requirement, available);
+                 if(score < 0){
                      current_score = -1;
+                     accept = false;
                      break;
                  }
-                 current_score += verifyRequeriment(requirement, available);
+                 else
+                    current_score += score;
              }
-             if (current_score < best_score && current_score > 0){
+             System.out.println(toAllocate.getId() + " -  Score: " + current_score + " Room: " + available.getAnswer() + " Accept: " + accept);
+             if (current_score < best_score && accept){
                  best_score = current_score;
                  best_fit = available;
+
              }
         }
         return best_fit;
     }
 
-    private int verifyRequeriment(Requirement requirement, ToAllocate available){ //compara um requirement de toAllocate com todos os requiments de available
+    public int verifyRequeriment(Requirement requirement, ToAllocate available){ //compara um requirement de toAllocate com todos os requiments de available
         boolean good = false;
         int score = 0;
         for (Requirement availableReq : available.getRequirements()){
             int ver = requirement.verify(availableReq);
             if (ver == -1 && requirement.isExclusive())
                 return -1;
-            else if(ver==0 && !requirement.isExclusive())
+            else if(ver==1 && !requirement.isExclusive())
                 good = true;
             score += ver;
         }

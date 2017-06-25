@@ -54,4 +54,23 @@ public class StartDate implements Requirement {
     public String getHour() {
         return hour;
     }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        StartDate startDate = (StartDate) o;
+
+        if (!day.equals(startDate.day)) return false;
+        return hour.equals(startDate.hour);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = day.hashCode();
+        result = 31 * result + hour.hashCode();
+        return result;
+    }
 }

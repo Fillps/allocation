@@ -126,7 +126,7 @@ public class Integrator extends Allocator{
         return toAllocate;
     }
 
-    private List<StartDate> createStartDate(int duration, String startTime, String day){
+    public List<StartDate> createStartDate(int duration, String startTime, String day){
         List<StartDate> startDateList = new ArrayList<>();
         int classes = duration/120;
         DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");

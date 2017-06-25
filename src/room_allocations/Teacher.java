@@ -12,7 +12,10 @@ public class Teacher implements Requirement{
     private StartDate startDate;
     private String roomId;
 
-
+    public Teacher(String name, StartDate startDate) {
+        this.name = name;
+        this.startDate = startDate;
+    }
 
     @Override
     public int verify(Requirement o) {
@@ -53,11 +56,6 @@ public class Teacher implements Requirement{
 
     public StartDate getStartDate() {
         return startDate;
-    }
-
-    public Teacher(String name, StartDate startDate) {
-        this.name = name;
-        this.startDate = startDate;
     }
 
     public String getRoomId() {

@@ -12,8 +12,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * Created by filip on 21/06/2017.
  */
 class AllocatorTest {
+    Allocator allocator;
+
     @BeforeEach
     void setUp() {
+        allocator = new Allocator();
     }
 
     @AfterEach
@@ -22,9 +25,13 @@ class AllocatorTest {
 
     @Test
     void verifyRequirementTest() {
-        ToAllocate toAllocate = new ToAllocate();
-        toAllocate.addRequirement(new Features("2"));
-        toAllocate.addRequirement(new NumberOfPlaces(20));
+        ToAllocate available = new ToAllocate();
+        available.addRequirement(new Features("9"));
+        available.addRequirement(new NumberOfPlaces(40));
+
+        Requirement requirement = new Features("2");
+
+        assertTrue(allocator.verifyRequeriment(requirement, available)==-1);
 
 
     }
