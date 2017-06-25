@@ -146,8 +146,6 @@ public class Integrator extends Allocator{
 
     private void setAllocatorInfo(ToAllocate toAllocate){
         String[] ids = toAllocate.getId().split("#"); //id -> course#group
-        if (toAllocate.getId().equals("INF01058#A"))
-            System.out.println("as");
         String[] answers = toAllocate.getAnswer().split("#"); //answer -> building#room
         for (StartDate startDate : getStartDateFromRequirements(toAllocate.getRequirements()))
             setRoomID(ids[0], ids[1], answers[1],answers[0],startDate.getDay());

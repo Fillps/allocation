@@ -50,9 +50,7 @@ public class Allocator {
         int best_score = Integer.MAX_VALUE;
         ToAllocate best_fit = null;
         for (ToAllocate available : availableList){
-
              int current_score = 0;
-             boolean accept = true;
              for(Requirement requirement : toAllocate.getRequirements()){
                  Requirement out = verifyGlobalRequirements(requirement); //verifica se o requerimento existe nos requerimentos globais
                  if (out!=null)                                          // se ele existe, entao ja temos a resposta, que esta contida nesse requerimento
@@ -60,34 +58,31 @@ public class Allocator {
                  int score = verifyRequeriment(requirement, available);
                  if(score < 0){
                      current_score = -1;
-                     accept = false;
                      break;
                  }
                  else
                     current_score += score;
              }
-             System.out.println(toAllocate.getId() + " -  Score: " + current_score + " Room: " + available.getAnswer() + " Accept: " + accept);
-             if (current_score < best_score && accept){
+             if (current_score < best_score && current_score > 0){
                  best_score = current_score;
                  best_fit = available;
-
              }
         }
         return best_fit;
     }
 
     public int verifyRequeriment(Requirement requirement, ToAllocate available){ //compara um requirement de toAllocate com todos os requiments de available
-        boolean good = false;
+        boolean acceptNonExclusive = false;
         int score = 0;
         for (Requirement availableReq : available.getRequirements()){
             int ver = requirement.verify(availableReq);
-            if (ver == -1 && requirement.isExclusive())
+            if (ver == -1)
                 return -1;
             else if(ver==1 && !requirement.isExclusive())
-                good = true;
+                acceptNonExclusive = true;
             score += ver;
         }
-        if (!good && !requirement.isExclusive())
+        if (!acceptNonExclusive && !requirement.isExclusive())
             score = -1;
         return score;
     }
