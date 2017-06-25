@@ -7,7 +7,7 @@
 		  </course>
 		  <course name='AGENTES AUTÔNOMOS E SISTEMAS MULTIAGENTES' id='CMP124'>
 		- <group number_of_students='30' teacher='ANA LUCIA CETERTICH BAZZAN' id='U'>
-		  <session duration='240' requires_building_id='' requires_room_id='' weekday='2' start_time='13:30'/> 
+		  <session duration='240' weekday='2' start_time='13:30'/>
 		  </group>
 		  </course>
 		- <course name='ALGORÍTMOS E PROGRAMAÇÃO - CIC' id='INF01202'>
@@ -66,7 +66,7 @@
 		  </course>
 		- <course name='ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES II' id='INF01112'>
 		- <group number_of_students='40' teacher='RAUL FERNANDO WEBER' id='A'>
-		  <session room_id='' duration='120' requires_building_id='' requires_room_id='ANFA (Anfiteatro Azul)' building_id='' weekday='1' start_time='08:30'/> 
+		  <session room_id='' duration='120' requires_building_id='43412(65)' requires_room_id='ANFA (Anfiteatro Azul)' building_id='' weekday='1' start_time='08:30'/>
 		  <session room_id='' duration='120' building_id='' weekday='3' start_time='08:30'/> 
 		  </group>
 		- <group number_of_students='10' teacher='JOAO CESAR NETTO' id='B'>
@@ -86,13 +86,13 @@
 		</course>
 		- <course name='ARQUITETURAS AVANÇADAS DE COMPUTADORES' id='INF01191'>
 		- <group number_of_students='30' teacher='PHILIPPE OLIVIER ALEXANDRE NAVAUX' id='U'>
-		  <session room_id='' duration='120' requires_building_id='' requires_room_id='ANFA (Anfiteatro Azul)' building_id='' weekday='2' start_time='08:30'/> 
+		  <session room_id='' duration='120' requires_building_id='43412(65)' requires_room_id='ANFA (Anfiteatro Azul)' building_id='' weekday='2' start_time='08:30'/>
 		  <session room_id='' duration='120' building_id='' weekday='4' start_time='08:30'/> 
 		  </group>
 		  </course>
 		- <course name='CATEGORIAS COMPUTACIONAIS N' id='INF05006'>
 		- <group number_of_students='40' teacher='PAULO FERNANDO BLAUTH MENEZES' id='U'>
-		  <session duration='120' requires_building_id='' requires_room_id='108' weekday='2' start_time='13:30'/>
+		  <session duration='120' requires_building_id='43425(73)' requires_room_id='108' weekday='2' start_time='13:30'/>
 		  <session duration='120' weekday='4' start_time='13:30'/>
 		  </group>
 		  </course>
@@ -238,7 +238,7 @@
 		  </course>
 		  <course name='FUNDAMENTOS DE ALGORITMOS' id='INF05008'>
 		 <group number_of_students='40' teacher='ANA LUCIA CETERTICH BAZZAN' id='A'>
-		  <session duration='120' requires_building_id='' requires_room_id='ANFA (Anfiteatro Azul)' weekday='1' start_time='13:30'/>
+		  <session duration='120' requires_building_id='43412(65)' requires_room_id='ANFA (Anfiteatro Azul)' weekday='1' start_time='13:30'/>
 		  <session duration='120' weekday='3' start_time='13:30'/>
 		  </group>
 		 <group number_of_students='40' teacher='LEILA RIBEIRO' id='B'>
@@ -499,7 +499,7 @@
 		  </course>
 		 <course name='REDES DE COMPUTADORES N' id='INF01154'>
 		 <group number_of_students='40' teacher='ALEXANDRE DA SILVA CARISSIMI' id='A, B'>
-		  <session duration='120' requires_building_id='' requires_room_id='108' weekday='2' start_time='10:30'/>
+		  <session duration='120' requires_building_id='43425(73)' requires_room_id='108' weekday='2' start_time='10:30'/>
 		  <session duration='120' weekday='4' start_time='10:30'/>
 		  </group>
 		 <group number_of_students='20' teacher='VALTER ROESLER' id='A'>
@@ -549,7 +549,7 @@
 		  </course>
 		 <course name='SISTEMAS DIGITAIS PARA COMPUTADORES A' id='INF01175'>
 		 <group number_of_students='30' teacher='FERNANDA GUSMAO DE LIMA KASTENSMIDT' id='U'>
-		  <session duration='120' requires_building_id='' requires_room_id='105' weekday='2' start_time='08:30'/>
+		  <session duration='120' requires_building_id='43425(73)' requires_room_id='105' weekday='2' start_time='08:30'/>
 		  <session duration='120' weekday='4' start_time='08:30'/>
 		  </group>
 		  </course>
@@ -589,11 +589,11 @@
 		  </course>
 		  <course name='TEORIA DA COMPUTAÇÃO N' id='INF05501'>
 		 <group number_of_students='40' teacher='TIARAJU ASMUZ DIVERIO' id='A'>
-		  <session room_id='' duration='120' requires_building_id='' requires_room_id='118' building_id='' weekday='1' start_time='08:30'/> 
+		  <session room_id='' duration='120' requires_building_id='43425(73)' requires_room_id='118' building_id='' weekday='1' start_time='08:30'/>
 		  <session room_id='' duration='120' building_id='' weekday='3' start_time='08:30'/> 
 		  </group>
 		 <group number_of_students='50' teacher='TIARAJU ASMUZ DIVERIO' id='B'>
-		  <session room_id='' duration='120' requires_building_id='' requires_room_id='118' building_id='' weekday='1' start_time='10:30'/> 
+		  <session room_id='' duration='120' requires_building_id='43425(73)' requires_room_id='118' building_id='' weekday='1' start_time='10:30'/>
 		  <session room_id='' duration='120' building_id='' weekday='3' start_time='10:30'/> 
 		  </group>
 		  </course>

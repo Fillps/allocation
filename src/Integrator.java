@@ -2,7 +2,6 @@ import allocator.Allocator;
 
 import allocator.Requirement;
 import allocator.ToAllocate;
-import com.sun.org.apache.regexp.internal.RE;
 import room_allocations.*;
 import room_xml.*;
 
@@ -23,8 +22,8 @@ public class Integrator extends Allocator{
     public Integrator(String path) throws JAXBException, XMLStreamException {
         super(new ArrayList<ToAllocate>(), new ArrayList<ToAllocate>());
         this.allocationType = Parser.unmarshall(path);
-        integrateToAllocateList();
         integrateAvailableList();
+        integrateToAllocateList();
         allocate();
     }
 
@@ -33,7 +32,9 @@ public class Integrator extends Allocator{
             for (RoomType roomType : buildingType.getRoom()){
                 if (roomType.getAvailableForAllocation()==null){
                     ToAllocate available = new ToAllocate();
-                    available.setAnswer(buildingType.getId()+ "#" + roomType.getId());
+                    String answer = buildingType.getId()+ "#" + roomType.getId();
+                    available.setAnswer(answer);
+                    available.setId(answer);
                     available.addRequirement(new NumberOfPlaces(Integer.parseInt(roomType.getNumberOfPlaces())));
                     if (roomType.getFeatureIds()!=null) {
                         String[] features = roomType.getFeatureIds().split(", ");
@@ -63,17 +64,19 @@ public class Integrator extends Allocator{
                         }
                     }
                     else if (hasFeatures && sessionType.getFeatureIds()==null){  //aula anterior teve features, essa nao tem
-                        toAllocateList.add(toAllocate);
+                        handleToAllocate(toAllocate);
                         toAllocate = createToAllocateWithoutFeatures(courseType.getId(),groupType,sessionType);
                         hasFeatures = false;
                     }
                     else if (!hasFeatures && sessionType.getFeatureIds()!=null){ //aula anterior tem features, essa sim
-                        toAllocateList.add(toAllocate);
+                        handleToAllocate(toAllocate);
                         toAllocate = createToAllocateWithoutFeatures(courseType.getId(),groupType,sessionType);
                         hasFeatures = true;
                         toAllocate.addRequirement(new Features(sessionType.getFeatureIds()));
                     }
                     else {              // aula sera na mesma sala anterior, senda assim, so adicionamos novos horarios para alocar, assim como o professor naquele horario
+                        if (sessionType.getRequiresRoomId()!=null && sessionType.getRequiresBuildingId()!=null)//tambem verifica se possui requiresRoom
+                            toAllocate.addRequirement(new RequiresRoom(sessionType.getRequiresBuildingId() + "#" + sessionType.getRequiresRoomId()));
                         List<StartDate> startDateList = createStartDate(Integer.parseInt(sessionType.getDuration()), sessionType.getStartTime(), sessionType.getWeekday());
                         for (StartDate startDate : startDateList){
                             toAllocate.addRequirement(startDate);
@@ -81,16 +84,40 @@ public class Integrator extends Allocator{
                         }
                     }
                 }
-                toAllocateList.add(toAllocate);
+                handleToAllocate(toAllocate);
             }
         }
     }
 
-    private ToAllocate createToAllocateWithoutFeatures(String course, GroupType groupType, SessionType sessionType){
+    private void handleToAllocate(ToAllocate toAllocate){
+        for (Requirement requirement : toAllocate.getRequirements())
+            if (requirement instanceof RequiresRoom){
+                RequiresRoom requiresRoom = (RequiresRoom) requirement;
+                toAllocate.setAnswer(requirement.answer());
+                setAllocatorInfo(toAllocate);
+                ToAllocate available = searchAvailable(toAllocate.getAnswer());
+                if (available!=null)
+                    for (StartDate startDate : getStartDateFromRequirements(toAllocate.getRequirements()))
+                        available.addRequirement(startDate);
+                return;
+            }
+        toAllocateList.add(toAllocate);
+    }
 
+    private ToAllocate searchAvailable(String id){
+        for(ToAllocate available : availableList)
+            if (available.getId().equals(id))
+                return available;
+        return null;
+    }
+
+    private ToAllocate createToAllocateWithoutFeatures(String course, GroupType groupType, SessionType sessionType){
         ToAllocate toAllocate = new ToAllocate();
         toAllocate.setId(course + "#" + groupType.getId());
         toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
+        if (sessionType.getRequiresRoomId()!=null && sessionType.getRequiresBuildingId()!=null)
+            toAllocate.addRequirement(new RequiresRoom(sessionType.getRequiresBuildingId() + "#" + sessionType.getRequiresRoomId()));
+
 
         List<StartDate> startDateList = createStartDate(Integer.parseInt(sessionType.getDuration()), sessionType.getStartTime(), sessionType.getWeekday());
         for (StartDate startDate : startDateList){
@@ -115,15 +142,18 @@ public class Integrator extends Allocator{
     }
 
     public void saveToFile(String path) throws JAXBException {
-        for(ToAllocate toAllocate : toAllocateList){
-            String[] ids = toAllocate.getId().split("#"); //id -> course#group
-            if (toAllocate.getId().equals("INF01058#A"))
-                System.out.println("as");
-            String[] answers = toAllocate.getAnswer().split("#"); //answer -> building#room
-            for (String day : getDaysFromRequirements(toAllocate.getRequirements()))
-                setRoomID(ids[0], ids[1], answers[1],answers[0],day);
-        }
+        for(ToAllocate toAllocate : toAllocateList)
+            setAllocatorInfo(toAllocate);
         Parser.marshall(allocationType, path);
+    }
+
+    private void setAllocatorInfo(ToAllocate toAllocate){
+        String[] ids = toAllocate.getId().split("#"); //id -> course#group
+        if (toAllocate.getId().equals("INF01058#A"))
+            System.out.println("as");
+        String[] answers = toAllocate.getAnswer().split("#"); //answer -> building#room
+        for (StartDate startDate : getStartDateFromRequirements(toAllocate.getRequirements()))
+            setRoomID(ids[0], ids[1], answers[1],answers[0],startDate.getDay());
     }
 
     private void setRoomID(String course, String group, String room, String building, String day){
@@ -147,14 +177,11 @@ public class Integrator extends Allocator{
         return null;
     }
 
-    private List<String> getDaysFromRequirements(List<Requirement> requirements){
-        List<String> results = new ArrayList<>();
-        for (Requirement requirement : requirements){
-            if(requirement instanceof StartDate){
-                StartDate startDate = (StartDate) requirement;
-                results.add(startDate.getDay());
-            }
-        }
+    private List<StartDate> getStartDateFromRequirements(List<Requirement> requirements){
+        List<StartDate> results = new ArrayList<>();
+        for (Requirement requirement : requirements)
+            if(requirement instanceof StartDate)
+                results.add((StartDate) requirement);
         return results;
     }
 
