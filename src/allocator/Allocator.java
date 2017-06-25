@@ -44,7 +44,7 @@ public class Allocator {
      * @return available -> retorna um objeto que satisfaz todos os requerimentos (da availableList)
      */
     private ToAllocate verifyAvailable(ToAllocate toAllocate){
-        int best_score = 0;
+        int best_score = Integer.MAX_VALUE;
         ToAllocate best_fit = null;
         for (ToAllocate available : availableList){
              int current_score = 0;
@@ -58,7 +58,7 @@ public class Allocator {
                  }
                  current_score += verifyRequeriment(requirement, available);
              }
-             if (current_score > best_score){
+             if (current_score < best_score && current_score > 0){
                  best_score = current_score;
                  best_fit = available;
              }
@@ -67,15 +67,17 @@ public class Allocator {
     }
 
     private int verifyRequeriment(Requirement requirement, ToAllocate available){ //compara um requirement de toAllocate com todos os requiments de available
-
+        boolean good = false;
         int score = 0;
         for (Requirement availableReq : available.getRequirements()){
             int ver = requirement.verify(availableReq);
-            if (requirement.isExclusive() && ver < 0)
+            if (ver == -1 && requirement.isExclusive())
                 return -1;
+            else if(ver==0 && !requirement.isExclusive())
+                good = true;
             score += ver;
         }
-        if (!requirement.isExclusive() && score == 0)
+        if (!good && !requirement.isExclusive())
             score = -1;
         return score;
     }

@@ -25,10 +25,10 @@ public class Features implements Requirement {
             return 0;
         Features n = (Features) o;
         if (id.equals(n.getId())){  //verificar se requer uma sala normal ou laboratorio
-            return 1;
+            return 0;
         }
         else
-            return  0;
+            return 30;
     }
 
     @Override

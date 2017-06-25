@@ -479,7 +479,7 @@
 		  <session room_id='' duration='120' building_id='' weekday='4' start_time='08:30'/> 
 		  </group>
 		  </course>
-		 <course name='PROJETO E TESTE DE SISTEMAS VLSI' id='INF01008'>
+		 <course name='PROJETO E TESTE DE SISTEMAS VLSI' id='INF01008?'>
 		 <group number_of_students='40' teacher='FERNANDA GUSMÃO DE LIMA KASTENSMIDT' id='U'>
 		  <session room_id='' duration='120' building_id='' weekday='2' start_time='13:30'/> 
 		  <session room_id='' duration='120' building_id='' weekday='4' start_time='13:30'/> 

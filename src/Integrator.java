@@ -25,6 +25,7 @@ public class Integrator extends Allocator{
         integrateAvailableList();
         integrateToAllocateList();
         allocate();
+        updateAllocationType();
     }
 
     private void integrateAvailableList(){
@@ -41,8 +42,6 @@ public class Integrator extends Allocator{
                         for (String feature : features)
                             available.addRequirement(new Features(feature));
                     }
-                    else
-                        available.addRequirement(new Features("0"));
                     availableList.add(available);
                 }
             }
@@ -142,8 +141,6 @@ public class Integrator extends Allocator{
     }
 
     public void saveToFile(String path) throws JAXBException {
-        for(ToAllocate toAllocate : toAllocateList)
-            setAllocatorInfo(toAllocate);
         Parser.marshall(allocationType, path);
     }
 
@@ -192,6 +189,15 @@ public class Integrator extends Allocator{
 
     public List<ToAllocate> getAvailableList() {
         return availableList;
+    }
+
+    private void updateAllocationType(){
+        for(ToAllocate toAllocate : toAllocateList)
+            setAllocatorInfo(toAllocate);
+    }
+
+    public AllocationType getAllocationType() {
+        return allocationType;
     }
 
 

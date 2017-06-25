@@ -23,7 +23,7 @@ public class NumberOfPlaces implements Requirement {
         int score;
         NumberOfPlaces n = (NumberOfPlaces) o;
         if (seats<= n.getSeats()){
-            score = 100*seats/n.getSeats();
+            score = n.getSeats() - seats + 1;
         }
         else
             score = -1;
