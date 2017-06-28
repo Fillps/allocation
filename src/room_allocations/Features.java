@@ -7,7 +7,7 @@ import allocator.Requirement;
  */
 public class Features implements Requirement {
 
-    private String id; // ids para sala normal(sem features) = 0 ou laboratorio = 1 a 10
+    private String id;
 
     public Features(String id) {
         this.id = id;
@@ -24,7 +24,7 @@ public class Features implements Requirement {
         if (!(o instanceof Features))
             return 0;
         Features n = (Features) o;
-        if (id.equals(n.getId())){  //verificar se requer uma sala normal ou laboratorio
+        if (id.equals(n.getId())){
             return 1;
         }
         else

@@ -49,4 +49,8 @@ public class NumberOfPlaces implements Requirement {
     public boolean setAnswer(String answer) {
         return false;
     }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
 }

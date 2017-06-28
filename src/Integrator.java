@@ -10,7 +10,9 @@ import javax.xml.stream.XMLStreamException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by filip on 26/05/2017.
@@ -18,6 +20,8 @@ import java.util.List;
 public class Integrator extends Allocator{
 
     private AllocationType allocationType;
+
+    private Map<StartDate, ToAllocate> professorStartTimeMap = new HashMap<>();
 
     public Integrator(String path) throws JAXBException, XMLStreamException {
         super(new ArrayList<ToAllocate>(), new ArrayList<ToAllocate>());
@@ -93,7 +97,7 @@ public class Integrator extends Allocator{
             if (requirement instanceof RequiresRoom){
                 RequiresRoom requiresRoom = (RequiresRoom) requirement;
                 toAllocate.setAnswer(requirement.answer());
-                setAllocatorInfo(toAllocate);
+                setToAllocateInfo(toAllocate);
                 ToAllocate available = searchAvailable(toAllocate.getAnswer());
                 if (available!=null)
                     for (StartDate startDate : getStartDateFromRequirements(toAllocate.getRequirements()))
@@ -113,17 +117,40 @@ public class Integrator extends Allocator{
     private ToAllocate createToAllocateWithoutFeatures(String course, GroupType groupType, SessionType sessionType){
         ToAllocate toAllocate = new ToAllocate();
         toAllocate.setId(course + "#" + groupType.getId());
-        toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
         if (sessionType.getRequiresRoomId()!=null && sessionType.getRequiresBuildingId()!=null)
             toAllocate.addRequirement(new RequiresRoom(sessionType.getRequiresBuildingId() + "#" + sessionType.getRequiresRoomId()));
 
 
         List<StartDate> startDateList = createStartDate(Integer.parseInt(sessionType.getDuration()), sessionType.getStartTime(), sessionType.getWeekday());
+
+        boolean numberOfStudentsAdded = false;
         for (StartDate startDate : startDateList){
             toAllocate.addRequirement(startDate);
             toAllocate.addRequirement(new Teacher(groupType.getTeacher(), startDate));
+            if (professorStartTimeMap.containsKey(startDate)){
+                int updatedNumber = updateNumberOfStudents(professorStartTimeMap.get(startDate),Integer.parseInt(groupType.getNumberOfStudents()));
+                toAllocate.addRequirement(new NumberOfPlaces(updatedNumber));
+                numberOfStudentsAdded = true;
+            }
+            if (!numberOfStudentsAdded)
+                toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
         }
+
+        toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
+
+
         return toAllocate;
+    }
+
+    private int updateNumberOfStudents(ToAllocate toAllocate, int numberOfStudents){
+        for (Requirement requirement : toAllocate.getRequirements()){
+            if (requirement instanceof NumberOfPlaces){
+                NumberOfPlaces numberOfPlaces = (NumberOfPlaces) requirement;
+                numberOfPlaces.setSeats(numberOfPlaces.getSeats() + numberOfStudents);
+                return numberOfPlaces.getSeats();
+            }
+        }
+        return numberOfStudents;
     }
 
     public List<StartDate> createStartDate(int duration, String startTime, String day){
@@ -144,7 +171,7 @@ public class Integrator extends Allocator{
         Parser.marshall(allocationType, path);
     }
 
-    private void setAllocatorInfo(ToAllocate toAllocate){
+    private void setToAllocateInfo(ToAllocate toAllocate){
         String[] ids = toAllocate.getId().split("#"); //id -> course#group
         String[] answers = toAllocate.getAnswer().split("#"); //answer -> building#room
         for (StartDate startDate : getStartDateFromRequirements(toAllocate.getRequirements()))
@@ -191,7 +218,7 @@ public class Integrator extends Allocator{
 
     private void updateAllocationType(){
         for(ToAllocate toAllocate : toAllocateList)
-            setAllocatorInfo(toAllocate);
+            setToAllocateInfo(toAllocate);
     }
 
     public AllocationType getAllocationType() {

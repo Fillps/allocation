@@ -35,6 +35,8 @@ class IntegratorTest {
 
     @Test
     void resultsTest() {
+
+        System.out.println("1".contains("2"));
         for (SessionTypeTest session : sessionTypeTestList){
             if (!session.getBuildingId().equals("not found")){
                 RoomTest room = searchRooms(session.getBuildingId(),session.getRoomId());
