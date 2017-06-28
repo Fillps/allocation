@@ -23,11 +23,15 @@ public class MainFrame extends JFrame {
             try {
                 Integrator integrator = new Integrator(fileChooser.getSelectedFile().getAbsolutePath());
                 integrator.saveToFile(fileChooser.getSelectedFile().getParent() + "/resultados.xml");
+                JOptionPane.showMessageDialog(MainFrame.this, "Resultados importados para resultados.xml");
             } catch (JAXBException e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(MainFrame.this, "Erro ao ler o XML","Erro",JOptionPane.ERROR_MESSAGE);
             } catch (XMLStreamException e) {
                 e.printStackTrace();
+                JOptionPane.showMessageDialog(MainFrame.this, "Erro ao ler o XML","Erro",JOptionPane.ERROR_MESSAGE);
             }
+            System.exit(0);
 
         }
     }
