@@ -319,7 +319,7 @@
         </course>
         <course name="INTRODUÇÃO À PESQUISA EM INFORMÁTICA" id="INF01049">
             <group number_of_students="30" teacher="ANDRE INACIO REIS" id="A">
-                <session room_id="106" duration="240" building_id="43413(67)" weekday="5" start_time="10:30"></session>
+                <session room_id="ANFA (Anfiteatro Azul)" duration="240" building_id="43412(65)" weekday="5" start_time="10:30"></session>
             </group>
         </course>
         <course name="INTRODUÇÃO AO PROCESSAMENTO DE IMAGENS" id="CMP165">
@@ -354,7 +354,7 @@
                 <session room_id="102" duration="240" building_id="43413(67)" weekday="4" start_time="13:30"></session>
             </group>
             <group number_of_students="24" teacher="ROQUE ANTONIO LIMA" id="G">
-                <session room_id="102" duration="240" building_id="43424(72)" weekday="5" start_time="08:30"></session>
+                <session room_id="106" duration="240" building_id="43413(67)" weekday="5" start_time="08:30"></session>
             </group>
             <group number_of_students="25" teacher="ROQUE ANTONIO LIMA" id="H">
                 <session room_id="102" duration="240" building_id="43424(72)" weekday="5" start_time="13:30"></session>
@@ -362,7 +362,7 @@
         </course>
         <course name="INTRODUÇÃO À PESQUISA EM INFORMÁTICA" id="INF01049">
             <group number_of_students="40" teacher="ANDRE INACIO REIS" id="U">
-                <session room_id="106" duration="120" building_id="43413(67)" weekday="5" start_time="10:30"></session>
+                <session room_id="ANFA (Anfiteatro Azul)" duration="120" building_id="43412(65)" weekday="5" start_time="10:30"></session>
             </group>
         </course>
         <course name="INTRODUÇÃO À PROGRAMAÇÃO" id="INF01040">
@@ -595,7 +595,7 @@
             </group>
             <group number_of_students="50" teacher="TIARAJU ASMUZ DIVERIO" id="B">
                 <session room_id="118" duration="120" building_id="43425(73)" weekday="1" start_time="10:30" requires_building_id="43425(73)" requires_room_id="118"></session>
-                <session room_id="118" duration="120" building_id="43425(73)" weekday="3" start_time="10:30"></session>
+                <session room_id="118" duration="120" building_id="43425(73)" weekday="3" start_time="10:30" requires_building_id="43425(73)" requires_room_id="118"></session>
             </group>
         </course>
         <course name="TEORIA DOS GRAFOS E ANÁLISE COMBINATÓRIA" id="INF05512">

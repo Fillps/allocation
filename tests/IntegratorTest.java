@@ -1,15 +1,14 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import room_allocations.Integrator;
 import room_allocations.StartDate;
+import room_allocations.Teacher;
 import room_xml.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,33 +35,33 @@ class IntegratorTest {
     @Test
     void resultsTest() {
 
-        System.out.println("1".contains("2"));
         for (SessionTypeTest session : sessionTypeTestList){
             if (!session.getBuildingId().equals("not found")){
                 RoomTest room = searchRooms(session.getBuildingId(),session.getRoomId());
                 assertNotNull(room);
 
-                if (Integer.parseInt(room.getNumberOfPlaces())<session.getNumber_of_seats()){
+                if (Integer.parseInt(room.getNumberOfPlaces())<session.getNumber_of_seats() && session.getRequiresBuildingId()==null){
                     System.out.println("Room: " + session.getBuildingId() + " - " + session.getRoomId() + "  Students: " + session.getNumber_of_seats() + " Seats: " + room.getNumberOfPlaces());
                 }
-                //assertTrue(Integer.parseInt(room.getNumberOfPlaces())>=session.getNumber_of_seats());
+                assertFalse(Integer.parseInt(room.getNumberOfPlaces())<session.getNumber_of_seats() && session.getRequiresBuildingId()==null);
                 if (session.getFeatureIds()!=null) {
                     if (room.getFeatureIds().contains(session.getFeatureIds())==false)
-                    System.out.println("Room: " + session.getBuildingId() + " - " + session.getRoomId() + "  Feature Required: " + session.getFeatureIds() + " Feature Available: " + room.getFeatureIds());
-                    //assertTrue(room.getFeatureIds().contains(session.getFeatureIds()));
+                        System.out.println("Room: " + session.getBuildingId() + " - " + session.getRoomId() + "  Feature Required: " + session.getFeatureIds() + " Feature Available: " + room.getFeatureIds());
+                    assertTrue(room.getFeatureIds().contains(session.getFeatureIds()));
                 }
-
+                int i = 0;
                 for (StartDate startDate : integrator.createStartDate(Integer.parseInt(session.getDuration()), session.getStartTime(), session.getWeekday())) {
-                    boolean insert = (room.addSession(startDate));
+                    boolean insert = room.addSession(new Teacher(session.getTeacher(), startDate));
                     if (!insert)
                         System.out.println("Room: " + session.getBuildingId() + " - " + session.getRoomId() + "  StartDate: " + startDate.getDay() + " Hour: " + startDate.getHour());
-                    //assertTrue(insert);
+                    assertTrue(insert);
                 }
 
             }
         }
         return;
     }
+
 
     RoomTest searchRooms(String building_id, String room_id){
         for (RoomTest roomTest : roomTestList)
@@ -89,7 +88,7 @@ class IntegratorTest {
     }
 
     class RoomTest extends RoomType {
-        Set<StartDate> startDateSet = new HashSet<>();
+        Map<StartDate, String> startDateMap = new HashMap<>();
         String building_id;
 
         public RoomTest(String building_id, RoomType roomType) {
@@ -106,8 +105,15 @@ class IntegratorTest {
             return building_id;
         }
 
-        boolean addSession(StartDate startDate){
-            return startDateSet.add(startDate);
+        boolean addSession(Teacher teacher){
+            if (startDateMap.containsKey(teacher.getStartDate())){
+                if (startDateMap.get(teacher.getStartDate()).equals(teacher.getName()))
+                    return true;
+                else
+                    return false;
+            }
+            startDateMap.put(teacher.getStartDate(),teacher.getName());
+            return true;
         }
     }
 

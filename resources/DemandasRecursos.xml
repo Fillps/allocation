@@ -594,7 +594,7 @@
 		  </group>
 		 <group number_of_students='50' teacher='TIARAJU ASMUZ DIVERIO' id='B'>
 		  <session room_id='' duration='120' requires_building_id='43425(73)' requires_room_id='118' building_id='' weekday='1' start_time='10:30'/>
-		  <session room_id='' duration='120' building_id='' weekday='3' start_time='10:30'/> 
+		  <session room_id='' duration='120' requires_building_id='43425(73)' requires_room_id='118' building_id='' weekday='3' start_time='10:30'/>
 		  </group>
 		  </course>
 		 <course name='TEORIA DOS GRAFOS E ANÁLISE COMBINATÓRIA' id='INF05512'>

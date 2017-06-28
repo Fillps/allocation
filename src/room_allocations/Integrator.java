@@ -1,3 +1,5 @@
+package room_allocations;
+
 import allocator.Allocator;
 
 import allocator.Requirement;
@@ -21,7 +23,7 @@ public class Integrator extends Allocator{
 
     private AllocationType allocationType;
 
-    private Map<StartDate, ToAllocate> professorStartTimeMap = new HashMap<>();
+    private Map<Teacher, ToAllocate> teacherStartTimeMap = new HashMap<>();
 
     public Integrator(String path) throws JAXBException, XMLStreamException {
         super(new ArrayList<ToAllocate>(), new ArrayList<ToAllocate>());
@@ -119,26 +121,23 @@ public class Integrator extends Allocator{
         toAllocate.setId(course + "#" + groupType.getId());
         if (sessionType.getRequiresRoomId()!=null && sessionType.getRequiresBuildingId()!=null)
             toAllocate.addRequirement(new RequiresRoom(sessionType.getRequiresBuildingId() + "#" + sessionType.getRequiresRoomId()));
-
-
         List<StartDate> startDateList = createStartDate(Integer.parseInt(sessionType.getDuration()), sessionType.getStartTime(), sessionType.getWeekday());
-
         boolean numberOfStudentsAdded = false;
         for (StartDate startDate : startDateList){
             toAllocate.addRequirement(startDate);
-            toAllocate.addRequirement(new Teacher(groupType.getTeacher(), startDate));
-            if (professorStartTimeMap.containsKey(startDate)){
-                int updatedNumber = updateNumberOfStudents(professorStartTimeMap.get(startDate),Integer.parseInt(groupType.getNumberOfStudents()));
+            Teacher teacher = new Teacher(groupType.getTeacher(), startDate);
+
+            toAllocate.addRequirement(teacher);
+            if (teacherStartTimeMap.containsKey(teacher)){
+                int updatedNumber = updateNumberOfStudents(teacherStartTimeMap.get(teacher),Integer.parseInt(groupType.getNumberOfStudents()));
                 toAllocate.addRequirement(new NumberOfPlaces(updatedNumber));
                 numberOfStudentsAdded = true;
             }
-            if (!numberOfStudentsAdded)
-                toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
+            else
+                teacherStartTimeMap.put(teacher, toAllocate);
         }
-
-        toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
-
-
+        if (!numberOfStudentsAdded)
+            toAllocate.addRequirement(new NumberOfPlaces(Integer.parseInt(groupType.getNumberOfStudents())));
         return toAllocate;
     }
 

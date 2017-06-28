@@ -1,6 +1,7 @@
 import allocator.Allocator;
 import allocator.Requirement;
 import allocator.ToAllocate;
+import room_allocations.Integrator;
 import room_xml.Parser;
 import room_allocations.StartDate;
 import room_allocations.Teacher;

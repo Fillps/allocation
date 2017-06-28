@@ -62,4 +62,21 @@ public class Teacher implements Requirement{
         return roomId;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Teacher teacher = (Teacher) o;
+
+        if (!name.equals(teacher.name)) return false;
+        return startDate.equals(teacher.startDate);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + startDate.hashCode();
+        return result;
+    }
 }
