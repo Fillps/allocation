@@ -1,9 +1,9 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import room_allocations.Integrator;
-import room_allocations.StartDate;
-import room_allocations.Teacher;
-import room_xml.*;
+import tcp_trb_final.Integrator;
+import tcp_trb_final.room_allocations.StartDate;
+import tcp_trb_final.room_allocations.Teacher;
+import tcp_trb_final.room_xml.*;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
