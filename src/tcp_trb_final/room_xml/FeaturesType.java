@@ -69,4 +69,7 @@ public class FeaturesType {
         return this.feature;
     }
 
+    public void setFeature(List<FeatureType> feature) {
+        this.feature = feature;
+    }
 }

@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 
 
 /**
@@ -17,7 +18,7 @@ public class MainFrame extends JFrame {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new java.io.File("."));
         fileChooser.setDialogTitle("Escolha o arquivo a ser importado");
-        fileChooser.setFileFilter(new FileNameExtensionFilter(".xml", "xml"));
+        fileChooser.setFileFilter(new FileNameExtensionFilter(".xml, .xlsx", "xml","xlsx"));
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
                 Integrator integrator = new Integrator(fileChooser.getSelectedFile().getAbsolutePath());
@@ -29,6 +30,9 @@ public class MainFrame extends JFrame {
             } catch (XMLStreamException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(MainFrame.this, "Erro ao ler o XML","Erro",JOptionPane.ERROR_MESSAGE);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(MainFrame.this, "Erro ao ler o arquivo","Erro",JOptionPane.ERROR_MESSAGE);
+                e.printStackTrace();
             }
             System.exit(0);
 

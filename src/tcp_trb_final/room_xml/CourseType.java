@@ -126,4 +126,7 @@ public class CourseType {
         this.id = value;
     }
 
+    public void setGroup(List<GroupType> group) {
+        this.group = group;
+    }
 }

@@ -151,4 +151,7 @@ public class GroupType {
         this.id = value;
     }
 
+    public void setSession(List<SessionType> session) {
+        this.session = session;
+    }
 }
