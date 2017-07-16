@@ -10,6 +10,7 @@ import tcp_trb_final.allocator.ToAllocate;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -26,9 +27,9 @@ public class Integrator extends Allocator{
 
     private Map<Teacher, ToAllocate> teacherStartTimeMap = new HashMap<>();
 
-    public Integrator(String path) throws JAXBException, XMLStreamException {
+    public Integrator(String path) throws JAXBException, XMLStreamException, IOException {
         super(new ArrayList<ToAllocate>(), new ArrayList<ToAllocate>());
-        this.allocationType = Parser.unmarshall(path);
+        this.allocationType = Parser.importFile(path);
         integrateAvailableList();
         integrateToAllocateList();
         allocate();

@@ -8,6 +8,7 @@ import tcp_trb_final.room_xml.*;
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 
+import java.io.IOException;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,6 +29,8 @@ class IntegratorTest {
         } catch (JAXBException e) {
             e.printStackTrace();
         } catch (XMLStreamException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

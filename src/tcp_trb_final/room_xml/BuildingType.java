@@ -97,4 +97,7 @@ public class BuildingType {
         this.id = value;
     }
 
+    public void setRoom(List<RoomType> room) {
+        this.room = room;
+    }
 }

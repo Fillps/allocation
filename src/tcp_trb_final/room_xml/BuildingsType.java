@@ -69,4 +69,7 @@ public class BuildingsType {
         return this.building;
     }
 
+    public void setBuilding(List<BuildingType> building) {
+        this.building = building;
+    }
 }

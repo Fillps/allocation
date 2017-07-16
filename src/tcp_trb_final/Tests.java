@@ -10,6 +10,7 @@ import tcp_trb_final.room_xml.AllocationType;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Tests {
         String path = "resources\\DemandasRecursos.xml";
         String resultPath = "resources\\resultados.xml";
         try {
-            AllocationType allocationType = Parser.unmarshall(path);
+            AllocationType allocationType = Parser.importFile(path);
 
             allocationType.getCourses().getCourse().get(0).getGroup().get(0).getSession().get(0).setRoomId("111");
             System.out.println(allocationType.getCourses().getCourse().get(0).getId());
@@ -30,6 +31,8 @@ public class Tests {
         } catch (JAXBException e) {
             e.printStackTrace();
         } catch (XMLStreamException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -84,7 +87,7 @@ public class Tests {
 
     }
 
-    public static void integratorTest() throws JAXBException, XMLStreamException {
+    public static void integratorTest() throws JAXBException, XMLStreamException, IOException {
         Integrator integrator = new Integrator("resources\\DemandasRecursos.xml");
 
         //for (CourseType courseType : allocationType.getCourses().getCourse())
@@ -97,7 +100,7 @@ public class Tests {
         integrator.saveToFile("1");
     }
 
-    public static void integratorAndAllocatorTest() throws JAXBException, XMLStreamException {
+    public static void integratorAndAllocatorTest() throws JAXBException, XMLStreamException, IOException {
         Integrator integrator = new Integrator("resources\\DemandasRecursos.xml");
         integrator.saveToFile("resources\\resultados.xml");
     }

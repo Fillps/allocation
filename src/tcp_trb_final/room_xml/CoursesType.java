@@ -40,6 +40,10 @@ import javax.xml.bind.annotation.XmlType;
 public class CoursesType {
 
 
+    public void setCourse(List<CourseType> course) {
+        this.course = course;
+    }
+
     protected List<CourseType> course;
 
     /**
