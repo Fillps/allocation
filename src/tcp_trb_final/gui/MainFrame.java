@@ -24,11 +24,16 @@ public class MainFrame extends JFrame {
         fileChooser.setFileFilter(new FileNameExtensionFilter(".xml, .xlsx", "xml","xlsx"));
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
-                //Integrator integrator = new Integrator(fileChooser.getSelectedFile().getAbsolutePath());
-                //integrator.saveToFile(fileChooser.getSelectedFile().getParent() + "/resultados.xml");
-                AllocationType allocationType = Parser.importFile(fileChooser.getSelectedFile().getAbsolutePath());
-                NewAllocatorAdapter newAllocatorAdapter = new NewAllocatorAdapter(allocationType);
-                newAllocatorAdapter.allocate();
+                if (JOptionPane.showConfirmDialog(null, "Deseja importar no alocador do outro grupo?", "Alocar",
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    AllocationType allocationType = Parser.importFile(fileChooser.getSelectedFile().getAbsolutePath());
+                    NewAllocatorAdapter newAllocatorAdapter = new NewAllocatorAdapter(allocationType);
+                    newAllocatorAdapter.allocate();
+                    newAllocatorAdapter.save(fileChooser.getSelectedFile().getParent() + "/resultadosOutroAlocador.xml");
+                } else {
+                    Integrator integrator = new Integrator(fileChooser.getSelectedFile().getAbsolutePath());
+                    integrator.saveToFile(fileChooser.getSelectedFile().getParent() + "/resultados.xml");
+                }
                 JOptionPane.showMessageDialog(MainFrame.this, "Resultados importados para resultados.xml");
             } catch (JAXBException e) {
                 e.printStackTrace();

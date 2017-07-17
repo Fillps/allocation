@@ -4,6 +4,7 @@ import tcp_trb_final.new_allocator.dominio.*;
 import tcp_trb_final.new_allocator.serviços.*;
 import tcp_trb_final.room_xml.*;
 
+import javax.xml.bind.JAXBException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -305,6 +306,51 @@ public class NewAllocatorAdapter {
                 }
             }
         }
+    }
+
+    private void updateAllocationType(){
+        for (Disciplina disciplina : bancoDados.getListaDisciplinas()){
+            for (Turma turma : disciplina.get_Lista_Turmas()){
+                for (Aula aula : turma.getListaAulas()){
+                    SessionType sessionType = findSession(disciplina.getCodigo(),String.valueOf(turma.getID()),String.valueOf(aula.getDia().getID()));
+                    if (sessionType != null){
+                        if (aula.getSala() != null) {
+                            sessionType.setRoomId(aula.getSala().getID());
+                            sessionType.setBuildingId(bancoDados.getListaPredios().get(aula.getSala().getIndicePredio()).getID());
+                        }
+                    }
+                    else
+                        System.out.println(disciplina.getCodigo() + " - " + String.valueOf(turma.getID()) + " - " + String.valueOf(aula.getDia().getID()));
+                }
+            }
+        }
+    }
+
+    private SessionType findSession(String id_disciplina, String id_turma, String dia){
+
+        List<CourseType> courseList = allocationType.getCourses().getCourse();
+        for(CourseType courseType : courseList){
+            if(courseType.getId().equals(id_disciplina)){
+                List<GroupType> groupList = courseType.getGroup();
+                for(GroupType groupType : groupList){
+                    if(groupType.getId().contains(id_turma)){
+                        List<SessionType> sessionList = groupType.getSession();
+                        for(SessionType sessionType : sessionList){
+                            if(sessionType.getWeekday().equals(dia)){
+                                return sessionType;
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        return null;
+    }
+
+    public void save(String path) throws JAXBException {
+        updateAllocationType();
+        Parser.marshall(allocationType,path);
     }
 //--------------------------------------------------------------------------------------------------------------
 }
