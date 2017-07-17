@@ -79,6 +79,9 @@ public class Sala implements Sala_Interface {
 	// setters: setar dados da sala a partir da leitura do arquivo de entrada
 
 	public void set_Disponibilidade(String available) {
+		if(available == null){
+			available = new String();
+		}
 		if (available.length() > 0)
 			disponivel = Boolean.parseBoolean(available);
 		else

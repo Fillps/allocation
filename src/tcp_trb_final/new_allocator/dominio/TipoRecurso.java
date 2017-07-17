@@ -45,7 +45,10 @@ public class TipoRecurso implements TipoRecurso_Interface{
 	
 	public void setID(String feature_ids){
 		int id_tipo = 0; // se a string de entrada � vazia
-		
+
+		if(feature_ids == null){
+			feature_ids = new String();
+		}
 		if (feature_ids.length() > 0)
 			id_tipo = Integer.parseInt(feature_ids);
 			

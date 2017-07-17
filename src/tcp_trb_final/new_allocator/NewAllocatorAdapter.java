@@ -15,12 +15,12 @@ public class NewAllocatorAdapter {
     private BANCO_DADOS bancoDados;
     private AllocationType allocationType;
 
-    public NewAllocatorAdapter(BANCO_DADOS banco_dados, AllocationType allocationType){
-        this.bancoDados = banco_dados;
+    public NewAllocatorAdapter(AllocationType allocationType){
         this.allocationType = allocationType;
     }
 
     public void allocate() {
+        bancoDados = new BANCO_DADOS();
         makeBancoDados();
         organizeData();
 
@@ -159,6 +159,9 @@ public class NewAllocatorAdapter {
                     aula_qualquer.Incluir_Numero_Alunos_Lista_Aulas(turma.getListaAulas(), turma.getNumAlunos());
                 }
             }
+            List<Disciplina> lista_disciplinas= bancoDados.getListaDisciplinas();
+            if(lista_disciplinas.contains(disciplina) == false)
+                lista_disciplinas.add(disciplina);
         }
     }
 

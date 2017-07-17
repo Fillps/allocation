@@ -1,6 +1,9 @@
 package tcp_trb_final.gui;
 
 import tcp_trb_final.Integrator;
+import tcp_trb_final.new_allocator.NewAllocatorAdapter;
+import tcp_trb_final.room_xml.AllocationType;
+import tcp_trb_final.room_xml.Parser;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -21,8 +24,11 @@ public class MainFrame extends JFrame {
         fileChooser.setFileFilter(new FileNameExtensionFilter(".xml, .xlsx", "xml","xlsx"));
         if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             try {
-                Integrator integrator = new Integrator(fileChooser.getSelectedFile().getAbsolutePath());
-                integrator.saveToFile(fileChooser.getSelectedFile().getParent() + "/resultados.xml");
+                //Integrator integrator = new Integrator(fileChooser.getSelectedFile().getAbsolutePath());
+                //integrator.saveToFile(fileChooser.getSelectedFile().getParent() + "/resultados.xml");
+                AllocationType allocationType = Parser.importFile(fileChooser.getSelectedFile().getAbsolutePath());
+                NewAllocatorAdapter newAllocatorAdapter = new NewAllocatorAdapter(allocationType);
+                newAllocatorAdapter.allocate();
                 JOptionPane.showMessageDialog(MainFrame.this, "Resultados importados para resultados.xml");
             } catch (JAXBException e) {
                 e.printStackTrace();
