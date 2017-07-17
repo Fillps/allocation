@@ -125,30 +125,39 @@ public class NewAllocatorAdapter {
                 List<Professor> profAuxList = new ArrayList<>();
                 makeProfessor(groupType, profAuxList);
 
-                Turma turma = makeTurma(disciplina, groupType, profAuxList);
+                Turma turma_qualquer = new Turma('x', 0);
+                List<Object> lista_ids_turmas = turma_qualquer.Lista_ids_turmas(groupType.getId());
 
-                List<SessionType> sessionList = groupType.getSession();
-                for(SessionType sessionType : sessionList){
-                    Aula aula = new Aula(turma.getIndicesProfessores());
+                List<Turma> lista_turmas_disciplina = disciplina.get_Lista_Turmas();
+                for(Object id_turma : lista_ids_turmas) {
 
-                    aula.setDuracao(sessionType.getDuration());
-                    aula.setDia(sessionType.getWeekday());
-                    aula.setHoraInicio(sessionType.getStartTime());
-                    aula.setTipoRecurso(sessionType.getFeatureIds());
+                    Turma turma = new Turma(id_turma, disciplina.getCodigo());
 
-                    turma.Incluir_Aula(aula);
-                    aula.setIDTurma(turma.getID());
-                    aula.setCodDisc(turma.getCodigoDisciplina());
+                    int indice_turma = lista_turmas_disciplina.indexOf(turma);
+                    int numAlunos = Integer.parseInt(groupType.getNumberOfStudents());
+                    if (indice_turma == -1) {
+                        lista_turmas_disciplina.add(turma);
+                        turma.setNumAlunos(numAlunos);
+                    } else {
+                        turma = lista_turmas_disciplina.get(indice_turma);
+                        if (turma.getNumAlunos() > numAlunos)
+                            turma.setNumAlunos(numAlunos);
+                    }
 
-                    bancoDados.IncluirDia_ListaDias(sessionType.getWeekday());
-                    bancoDados.IncluirHorario_ListaHorarios(sessionType.getStartTime());
-                    bancoDados.IncluirTipo_ListaTiposSolicitados(sessionType.getFeatureIds());
+                    Professor_Servico prof_qualquer = new Professor_Servico();
+                    List<Integer> lista_indices_profs = prof_qualquer.Extrair_Indices_Lista_Professores(profAuxList);
+                    turma.Incluir_Professores(lista_indices_profs);
+
+                    List<SessionType> sessionList = groupType.getSession();
+                    for (SessionType sessionType : sessionList) {
+                        makeAula(sessionType, turma);
+                    }
+
+                    Incluir_Turma_na_Lista_Profs_Group(turma, profAuxList);
+
+                    Aula_Servico aula_qualquer = new Aula_Servico();
+                    aula_qualquer.Incluir_Numero_Alunos_Lista_Aulas(turma.getListaAulas(), turma.getNumAlunos());
                 }
-
-                Incluir_Turma_na_Lista_Profs_Group(turma, profAuxList);
-
-                Aula_Servico aula_qualquer = new Aula_Servico();
-                aula_qualquer.Incluir_Numero_Alunos_Lista_Aulas(turma.getListaAulas(), turma.getNumAlunos());
             }
         }
     }
@@ -174,7 +183,7 @@ public class NewAllocatorAdapter {
         }
     }
 
-    private Turma makeTurma(Disciplina disciplina, GroupType groupType, List<Professor> profAuxList){
+    private void makeTurma(Disciplina disciplina, GroupType groupType, List<Professor> profAuxList){
         Turma turma_qualquer = new Turma('x', 0);
         List<Object> lista_ids_turmas = turma_qualquer.Lista_ids_turmas(groupType.getId());
 
@@ -198,11 +207,26 @@ public class NewAllocatorAdapter {
             Professor_Servico prof_qualquer = new Professor_Servico();
             List<Integer> lista_indices_profs = prof_qualquer.Extrair_Indices_Lista_Professores(profAuxList);
             turma.Incluir_Professores(lista_indices_profs);
-
-            return turma;
         }
+
     }
 
+    private void makeAula(SessionType sessionType, Turma turma){
+        Aula aula = new Aula(turma.getIndicesProfessores());
+
+        aula.setDuracao(sessionType.getDuration());
+        aula.setDia(sessionType.getWeekday());
+        aula.setHoraInicio(sessionType.getStartTime());
+        aula.setTipoRecurso(sessionType.getFeatureIds());
+
+        turma.Incluir_Aula(aula);
+        aula.setIDTurma(turma.getID());
+        aula.setCodDisc(turma.getCodigoDisciplina());
+
+        bancoDados.IncluirDia_ListaDias(sessionType.getWeekday());
+        bancoDados.IncluirHorario_ListaHorarios(sessionType.getStartTime());
+        bancoDados.IncluirTipo_ListaTiposSolicitados(sessionType.getFeatureIds());
+    }
     private void Incluir_Turma_na_Lista_Profs_Group(Turma turma, List<Professor> profAuxList) {
         List<Professor> lista_professores = bancoDados.getListaProfs();
 
